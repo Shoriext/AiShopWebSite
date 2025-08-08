@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Wear - Товары</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            width: 1920px;
+            height: 1080px;
+            background: #fff;
+        }
+
+        /* Хэдер с центрированной навигацией */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 50px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            position: absolute;
+            left: 50px;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #273352;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+        }
+
+        .nav-link.active {
+            font-weight: 600;
+            border-bottom: 2px solid #273352;
+        }
+
+        .blue-stripe {
+            position: absolute;
+            width: 100%;
+            height: 70px;
+            top: 120px;
+            background: #273352;
+        }
+
+        /* Основной контент */
+        .products-container {
+            position: absolute;
+            top: 190px;
+            left: 0;
+            width: 100%;
+            padding: 0 50px;
+            box-sizing: border-box;
+        }
+
+        /* Стили для товаров */
+        .product-wrapper {
+            display: flex;
+            width: 100%;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .product-image-container {
+            width: 50%;
+            min-height: 700px;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .product-info {
+            width: 50%;
+            padding-top: 50px;
+        }
+
+        .product-title {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 58px;
+            line-height: 71px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 30px;
+            line-height: 37px;
+            color: #000000;
+            margin: 20px 0 10px 0;
+        }
+
+        .product-description p {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .color-sample {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #000000;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .size-btn {
+            width: 62px;
+            height: 62px;
+            background: #CCCCCC;
+            border: none;
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 62px;
+            color: #FFFFFF;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .price {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 30px;
+            line-height: 37px;
+            color: #000000;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.svg" alt="Ai Wear Logo">
+        </div>
+        <nav class="main-nav">
+            <!-- Ссылки через Thymeleaf -->
+            <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
+            <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
+            <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
+            <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
+        </nav>
+    </header>
+
+    <div class="blue-stripe"></div>
+
+    <main>
+        <div class="products-container">
+            <!-- Первый товар - Футболка -->
+            <div class="product-wrapper">
+                <div class="product-image-container">
+                    <img src="images/product1.jpg" alt="Футболка «Алфавит Студента»" class="product-image">
+                </div>
+                
+                <div class="product-info">
+                    <h1 class="product-title">Футболка «Алфавит Студента»</h1>
+                    
+                    <h3 class="section-title">Описание:</h3>
+                    <div class="product-description">
+                        <p>Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань</p>
+                        <p>премиального качества обеспечивает комфорт в течение всего дня,</p>
+                        <p>а стильный крой подходит для любого телосложения.</p>
+                    </div>
+                    
+                    <h3 class="section-title">Цвет:</h3>
+                    <p>черный <span class="color-sample"></span></p>
+                    
+                    <h3 class="section-title">Размеры:</h3>
+                    <div class="size-options">
+                        <button class="size-btn">S</button>
+                        <button class="size-btn">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+                    </div>
+                    
+                    <h3 class="section-title">Цена:</h3>
+                    <p class="price">1990 руб.</p>
+                </div>
+            </div>
+
+            <!-- Второй товар - Шоппер -->
+            <div class="product-wrapper">
+                <div class="product-image-container">
+                    <img src="images/product2.jpg" alt="Шоппер «Алфавит Студента»" class="product-image">
+                </div>
+                
+                <div class="product-info">
+                    <h1 class="product-title">Шоппер «Алфавит Студента»</h1>
+                    
+                    <h3 class="section-title">Описание:</h3>
+                    <div class="product-description">
+                        <p>Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном</p>
+                        <p>— must-have для современного студента. Прочная ткань с плотными швами</p>
+                        <p>выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.</p>
+                    </div>
+                    
+                    <h3 class="section-title">Цвет:</h3>
+                    <p>черный <span class="color-sample"></span></p>
+                    
+                    <h3 class="section-title">Цена:</h3>
+                    <p class="price">1490 руб.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -17,12 +17,12 @@ public class HomePageController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
-    public String showHomePage(Model model) {
-        List<Product> products = productService.getAllProducts();
-        model.addAttribute("products", products);
-        return "homePage";
-    }
+//    @GetMapping("/")
+//    public String showHomePage(Model model) {
+//        List<Product> products = productService.getAllProducts();
+//        model.addAttribute("products", products);
+//        return "index";
+//    }
 
     @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable Long id, Model model) {

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Wear - AI-Конструктор</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            width: 1920px;
+            height: 1080px;
+            background: #fff;
+        }
+
+        /* Хэдер как в products */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 50px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            position: absolute;
+            left: 50px;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #273352;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+        }
+
+        .nav-link.active {
+            font-weight: 600;
+            border-bottom: 2px solid #273352;
+        }
+
+        .blue-stripe {
+            position: absolute;
+            width: 100%;
+            height: 70px;
+            top: 120px;
+            background: #273352;
+        }
+
+        /* Основной контент */
+        .constructor-wrapper {
+            position: absolute;
+            top: 190px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            padding: 0 50px;
+            box-sizing: border-box;
+            gap: 50px;
+        }
+
+        /* Левая часть с изображением */
+        .image-container {
+            width: 50%;
+            min-height: 700px;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Правая часть с конструктором */
+        .constructor-content {
+            width: 50%;
+            padding-top: 50px;
+        }
+
+        .constructor-title {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 58px;
+            line-height: 71px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .request-box {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #273352;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .request-label {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 36px;
+            color: #000000;
+        }
+
+        .generate-btn {
+            background: #651413;
+            color: #ffffff;
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 29px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- Хэдер как в products -->
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.svg" alt="Ai Wear Logo">
+        </div>
+        <nav class="main-nav">
+            <!-- Ссылки через Thymeleaf -->
+            <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
+            <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
+            <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
+            <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
+        </nav>
+    </header>
+
+    <div class="blue-stripe"></div>
+
+    <main>
+        <div class="constructor-wrapper">
+            <!-- Левая часть - изображение -->
+            <div class="image-container">
+                <img src="images/ai.jpg" alt="AI Конструктор">
+            </div>
+            
+            <!-- Правая часть - конструктор -->
+            <div class="constructor-content">
+                <h1 class="constructor-title">AI-КОНСТРУКТОР</h1>
+                
+                <div class="request-box">
+                    <span class="request-label">Напишите здесь свой запрос</span>
+                </div>
+                
+                <button class="generate-btn">СГЕНЕРИРОВАТЬ</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

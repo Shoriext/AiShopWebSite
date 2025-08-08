@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Wear - О нас</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            width: 1920px;
+            height: 1080px;
+            background: #fff;
+        }
+
+        /* Хэдер с центрированной навигацией */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 50px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            position: absolute;
+            left: 50px;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #273352;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+        }
+
+        .nav-link.active {
+            font-weight: 600;
+            border-bottom: 2px solid #273352;
+        }
+
+        .blue-stripe {
+            position: absolute;
+            width: 100%;
+            height: 70px;
+            top: 120px;
+            background: #273352;
+        }
+
+        /* Основной контент */
+        .main-content {
+            position: absolute;
+            top: 190px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 190px);
+            padding: 0 50px;
+            box-sizing: border-box;
+        }
+
+        /* Красный прямоугольник с текстом */
+        .red-section {
+            position: absolute;
+            left: 50%;
+            right: 8.7%;
+            top: 0;
+            height: 400px;
+            background: #651413;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .main-heading {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 112px;
+            line-height: 1;
+            color: #FFFFFF;
+            padding: 20px; /* Убран border */
+            margin: 0 0 20px 0;
+            display: inline-block;
+        }
+
+        .sub-heading {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 1.2;
+            color: #FFFFFF;
+            margin: 10px 0;
+            display: block;
+        }
+
+        /* Основной текст (внизу страницы) */
+        .text-block {
+            position: absolute;
+            left: 8.72%;
+            width: 80%;
+            top: 450px;
+        }
+
+        .text-paragraph {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <!-- Логотип из папки static/images -->
+            <img th:src="@{/images/logo.svg}" alt="Ai Wear Logo">
+        </div>
+        <nav class="main-nav">
+        <!-- Ссылки через Thymeleaf -->
+            <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
+            <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
+            <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
+            <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
+        </nav>
+    </header>
+
+    <div class="blue-stripe"></div>
+
+    <main class="main-content">
+        <!-- Красный прямоугольник с текстом -->
+        <div class="red-section">
+            <h1 class="main-heading">Ai Wear</h1>
+            <p class="sub-heading">– это не просто мерч,</p>
+            <p class="sub-heading">а ваш уникальный стиль,</p>
+            <p class="sub-heading">воплощённый в одежде.</p>
+        </div>
+
+        <!-- Основной текст -->
+        <div class="text-block">
+            <p class="text-paragraph">Мы соединяем передовые технологии искусственного интеллекта и модный дизайн, чтобы вы могли создавать вещи, которые идеально отражают ваш характер и вкус. У нас есть готовые коллекции для тех, кто ищет стильные решения без лишних хлопот, но настоящая магия начинается, когда вы заходите в наш AI-конструктор.</p>
+            <p class="text-paragraph">Здесь вы становитесь дизайнером: выбираете принты, цвета, надписи – а наш интеллект превращает ваши идеи в реальность.</p>
+            <p class="text-paragraph">Каждая вещь создаётся с заботой о качестве, ведь мы используем лучшие материалы и технологии печати.</p>
+            <p class="text-paragraph">Хотите мерч, который будет говорить за вас? Ai Wear сделает это возможным.</p>
+            <p class="text-paragraph">Носите то, что вдохновляет – носите то, что создали именно вы.</p>
+        </div>
+    </main>
+</body>
+</html>

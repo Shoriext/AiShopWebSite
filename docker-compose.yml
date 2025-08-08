@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15  # Можно указать другую версию, например: 14, 16 и т.д.
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: onlinestore_db           # Имя базы данных
+      POSTGRES_USER: postgres           # Имя пользователя
+      POSTGRES_PASSWORD: 12341234  # Пароль
+      POSTGRES_HOST_AUTH_METHOD: trust  # Только для тестов! В продакшене всегда используйте пароли
+    ports:
+      - "5432:5432"                   # Порт хоста:порт контейнера
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Сохранение данных между перезапусками
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

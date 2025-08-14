@@ -244,7 +244,8 @@
 
         .products-row::-webkit-scrollbar-thumb:hover {
             background: #aaa;
-        }
+        }}
+
     </style>
 </head>
 <body>
@@ -258,9 +259,11 @@
         <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
         <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
         <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
-        <a href="/cart">🛒 Корзина (<span th:text="${#lists.size(cart)}">0</span>)</a>
+
     </nav>
 </header>
+
+<div class="blue-stripe"></div>
 
 <main>
     <div class="products-container">

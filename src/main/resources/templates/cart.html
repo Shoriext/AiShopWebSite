@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 100px 20px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; color: #273352; }
+        .cart-item {
+            display: flex;
+            background: #fff;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            align-items: center;
+        }
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-right: 20px;
+        }
+        .item-info { flex: 1; }
+        .item-price { font-weight: 600; }
+        .item-total { font-size: 18px; margin-top: 5px; }
+        .btn-remove {
+            background: #e53935;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .btn-checkout {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background: #273352;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Корзина</h1>
+
+    <!-- Если корзина пуста -->
+    <div th:if="${#lists.isEmpty(cart)}" class="empty">
+        <p>Ваша корзина пуста</p>
+        <a href="/products" class="btn-checkout">Вернуться к товарам</a>
+    </div>
+
+    <!-- Если корзина НЕ пуста -->
+    <div th:if="${!#lists.isEmpty(cart)}">
+        <!-- Список товаров -->
+        <div class="cart-item" th:each="item : ${cart}">
+            <img th:src="${item.product.imageUrl}" class="item-image" alt="" />
+            <div class="item-info">
+                <h3 th:text="${item.product.name}"></h3>
+                <p class="item-price"
+                   th:text="${#numbers.formatDecimal(item.product.price, 2, 2, 'COMMA')} + ' ₽'">
+                </p>
+                <p class="item-total"
+                   th:text="'Итого: ' + ${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽ (' + ${item.quantity} + ' шт.)'">
+                </p>
+            </div>
+            <a th:href="@{/cart/remove(productId=${item.product.id})}" class="btn-remove">Удалить</a>
+        </div>
+
+        <!-- Общая сумма -->
+        <div class="total"
+             th:text="'Общая сумма: ' + ${#numbers.formatDecimal(total, 2, 2, 'COMMA')} + ' ₽'">
+        </div>
+
+        <!-- КНОПКА ОФОРМИТЬ ЗАКАЗ — ТОЛЬКО ЕСЛИ ТОВАРЫ ЕСТЬ -->
+        <a th:if="${!#lists.isEmpty(cart)}" href="/checkout" class="btn-checkout">
+            Оформить заказ
+        </a>
+    </div>
+
+    <!-- Кнопка "Продолжить покупки" — всегда видна -->
+    <a href="/products" class="btn-checkout">Продолжить покупки</a>
+</div>
+</body>
+</html>

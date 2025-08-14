@@ -14,11 +14,11 @@ public class PageController {
         return "index"; // src/main/resources/templates/index.html
     }
 
-    @GetMapping("/products")
-    public String products(Model model) {
-        model.addAttribute("activePage", "products");
-        return "products"; // products.html
-    }
+//    @GetMapping("/products")
+//    public String products(Model model) {
+//        model.addAttribute("activePage", "products");
+//        return "products"; // products.html
+//    }
 
     @GetMapping("/constructor")
     public String constructor(Model model) {

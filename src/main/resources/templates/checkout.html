@@ -1,0 +1,126 @@
+<!-- src/main/resources/templates/checkout.html -->
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформление заказа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 100px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #273352;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .item-info {
+            flex: 1;
+        }
+        .item-total {
+            text-align: right;
+            font-weight: 500;
+        }
+        .total {
+            text-align: right;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button.btn-checkout {
+            display: block;
+            width: 220px;
+            margin: 20px auto;
+            padding: 12px;
+            background: #273352;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #555;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Оформление заказа</h1>
+
+    <!-- Список товаров -->
+    <div th:each="item : ${cart}">
+        <div class="cart-item">
+            <div class="item-info" th:text="${item.product.name}"></div>
+            <div class="item-total"
+                 th:text="${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽'">
+            </div>
+        </div>
+    </div>
+
+    <div class="total"
+         th:text="'Итого: ' + ${#numbers.formatDecimal(total, 2, 2, 'COMMA')} + ' ₽'">
+    </div>
+
+    <!-- Форма заказа -->
+    <form th:action="@{/checkout}" method="post">
+        <div class="form-group">
+            <label for="name">Ваше Имя и Фамилия</label>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="Иван Иванов"
+                   required />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Номер телефона</label>
+            <input type="tel"
+                   id="phone"
+                   name="phone"
+                   placeholder="+7 (999) 123-45-67"
+                   required />
+        </div>
+
+        <button type="submit" class="btn-checkout">Подтвердить заказ</button>
+    </form>
+
+    <a href="/cart" class="back-link">← Вернуться в корзину</a>
+</div>
+</body>
+</html>

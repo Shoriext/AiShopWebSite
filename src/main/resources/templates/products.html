@@ -12,15 +12,13 @@
             margin: 0;
             padding: 0;
             font-family: 'Montserrat', sans-serif;
-            position: relative;
-            width: 1920px;
-            height: 1080px;
-            background: #fff;
+            background: #f5f5f5;
+            color: #273352;
         }
 
         /* Хэдер с центрированной навигацией */
         .header {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -30,7 +28,9 @@
             justify-content: center;
             padding: 0 50px;
             box-sizing: border-box;
+            background: #fff;
             z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -71,163 +71,175 @@
             border-bottom: 2px solid #273352;
         }
 
-        .blue-stripe {
-            position: absolute;
-            width: 100%;
-            height: 70px;
-            top: 120px;
-            background: #273352;
-        }
-
         /* Основной контент */
         .products-container {
-            position: absolute;
-            top: 190px;
-            left: 0;
-            width: 100%;
-            padding: 0 50px;
+            max-width: 1200px;
+            margin: 180px auto;
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
-        /* Стили для товаров */
-        .product-wrapper {
-            display: flex;
-            width: 100%;
-            gap: 50px;
-            margin-bottom: 80px;
+        /* Карточка товара в стиле Ozon */
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 40px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
         .product-image-container {
-            width: 50%;
-            min-height: 700px;
-            background: #f5f5f5;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            background: #f9f9f9;
         }
 
         .product-image {
             max-width: 100%;
             max-height: 100%;
-            width: auto;
-            height: auto;
             object-fit: contain;
         }
 
         .product-info {
-            width: 50%;
-            padding-top: 50px;
+            padding: 16px;
         }
 
         .product-title {
-            font-family: 'Montserrat';
-            font-style: normal;
             font-weight: 500;
-            font-size: 58px;
-            line-height: 71px;
-            color: #000000;
-            margin-bottom: 40px;
+            font-size: 18px;
+            line-height: 1.4;
+            color: #000;
+            margin: 0 0 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price {
+            font-weight: 600;
+            font-size: 20px;
+            color: #000;
+            margin-bottom: 16px;
+        }
+
+        .details {
+            display: none;
+            margin-top: 16px;
+            border-top: 1px solid #eee;
+            padding-top: 16px;
         }
 
         .section-title {
-            font-family: 'Montserrat';
-            font-style: normal;
             font-weight: 500;
-            font-size: 30px;
-            line-height: 37px;
-            color: #000000;
-            margin: 20px 0 10px 0;
+            font-size: 14px;
+            color: #273352;
+            margin: 12px 0 6px 0;
         }
 
         .product-description p {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 300;
-            font-size: 14px;
-            line-height: 20px;
-            color: #000000;
-            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555;
+            margin: 0 0 6px;
         }
 
         .color-sample {
             display: inline-block;
-            width: 30px;
-            height: 30px;
-            background: #000000;
-            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            margin-left: 8px;
             vertical-align: middle;
+            border-radius: 50%;
         }
 
         .size-options {
             display: flex;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 6px;
         }
 
         .size-btn {
-            width: 62px;
-            height: 62px;
-            background: #CCCCCC;
+            width: 40px;
+            height: 40px;
+            background: #e0e0e0;
             border: none;
-            font-family: 'Montserrat';
-            font-style: normal;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 24px;
-            line-height: 62px;
-            color: #FFFFFF;
-            text-align: center;
+            color: #000;
             cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .price {
-            font-family: 'Montserrat';
-            font-style: normal;
+        .size-btn:hover {
+            background: #ccc;
+        }
+
+        .btn-more {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #273352;
+            color: #fff;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 30px;
-            line-height: 37px;
-            color: #000000;
-            margin-top: 30px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-more:hover {
+            background: #1a243b;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="images/logo.svg" alt="Ai Wear Logo">
-        </div>
-        <nav class="main-nav">
-            <!-- Ссылки через Thymeleaf -->
-            <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
-            <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
-            <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
-            <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
-        </nav>
-    </header>
+<header class="header">
+    <div class="logo">
+        <img src="images/logo.svg" alt="Ai Wear Logo">
+    </div>
+    <nav class="main-nav">
+        <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
+        <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
+        <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
+        <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
+    </nav>
+</header>
 
-    <div class="blue-stripe"></div>
-
-    <main>
-        <div class="products-container">
-            <!-- Первый товар - Футболка -->
-            <div class="product-wrapper">
-                <div class="product-image-container">
-                    <img src="images/product1.jpg" alt="Футболка «Алфавит Студента»" class="product-image">
-                </div>
-                
-                <div class="product-info">
-                    <h1 class="product-title">Футболка «Алфавит Студента»</h1>
-                    
+<main>
+    <div class="products-container">
+        <!-- Товар 1: Футболка -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="images/product1.jpg" alt="Футболка «Алфавит Студента»" class="product-image">
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">Футболка «Алфавит Студента»</h2>
+                <p class="price">1990 руб.</p>
+                <button class="btn-more" onclick="toggleDetails(this)">Подробнее</button>
+                <div class="details">
                     <h3 class="section-title">Описание:</h3>
                     <div class="product-description">
                         <p>Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань</p>
                         <p>премиального качества обеспечивает комфорт в течение всего дня,</p>
                         <p>а стильный крой подходит для любого телосложения.</p>
                     </div>
-                    
                     <h3 class="section-title">Цвет:</h3>
                     <p>черный <span class="color-sample"></span></p>
-                    
                     <h3 class="section-title">Размеры:</h3>
                     <div class="size-options">
                         <button class="size-btn">S</button>
@@ -235,36 +247,45 @@
                         <button class="size-btn">L</button>
                         <button class="size-btn">XL</button>
                     </div>
-                    
-                    <h3 class="section-title">Цена:</h3>
-                    <p class="price">1990 руб.</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Второй товар - Шоппер -->
-            <div class="product-wrapper">
-                <div class="product-image-container">
-                    <img src="images/product2.jpg" alt="Шоппер «Алфавит Студента»" class="product-image">
-                </div>
-                
-                <div class="product-info">
-                    <h1 class="product-title">Шоппер «Алфавит Студента»</h1>
-                    
+        <!-- Товар 2: Шоппер -->
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="images/product2.jpg" alt="Шоппер «Алфавит Студента»" class="product-image">
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">Шоппер «Алфавит Студента»</h2>
+                <p class="price">1490 руб.</p>
+                <button class="btn-more" onclick="toggleDetails(this)">Подробнее</button>
+                <div class="details">
                     <h3 class="section-title">Описание:</h3>
                     <div class="product-description">
                         <p>Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном</p>
                         <p>— must-have для современного студента. Прочная ткань с плотными швами</p>
                         <p>выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.</p>
                     </div>
-                    
                     <h3 class="section-title">Цвет:</h3>
                     <p>черный <span class="color-sample"></span></p>
-                    
-                    <h3 class="section-title">Цена:</h3>
-                    <p class="price">1490 руб.</p>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
+
+<script>
+    function toggleDetails(button) {
+        const details = button.nextElementSibling;
+        if (details.style.display === "block") {
+            details.style.display = "none";
+            button.textContent = "Подробнее";
+        } else {
+            details.style.display = "block";
+            button.textContent = "Скрыть";
+        }
+    }
+</script>
 </body>
 </html>

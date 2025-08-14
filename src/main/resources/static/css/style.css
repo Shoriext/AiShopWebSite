@@ -1,4 +1,4 @@
-/* Общие стили */
+/* Общие сбросы и настройки */
 * {
     margin: 0;
     padding: 0;
@@ -7,25 +7,32 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    width: 1920px;
-    height: 1080px;
-    position: relative;
+    background: #fff;
+    color: #273352;
     overflow-x: hidden;
 }
 
-/* Шапка сайта */
+/* ==================== ШАПКА САЙТА ==================== */
+
 .header {
     position: absolute;
-    width: 6%;
-    height: 8%;
-    left: 5%;
-    top: 2.31%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 0 50px;
+    box-sizing: border-box;
+    z-index: 100;
 }
 
 .logo {
     height: 80px;
+    width: auto;
+    position: absolute;
+    left: 50px;
 }
 
 .logo img {
@@ -34,13 +41,10 @@ body {
 }
 
 .main-nav {
-    position: absolute;
-    width: 50%;
-    left: 25%;
-    top: 3.5%;
     display: flex;
-    justify-content: space-between;
+    gap: 40px;
     align-items: center;
+    margin-top: 20px;
 }
 
 .nav-link {
@@ -52,6 +56,7 @@ body {
     color: #273352;
     text-decoration: none;
     text-transform: uppercase;
+    white-space: nowrap;
     letter-spacing: 1px;
     padding: 8px 12px;
     transition: all 0.3s ease;
@@ -63,16 +68,458 @@ body {
 
 .nav-link.active {
     font-weight: 600;
-    font-size: 18px;
     border-bottom: 2px solid #273352;
 }
 
-/* Синяя полоса */
+/* ==================== СИНЯЯ ПОЛОСА ==================== */
+
 .blue-stripe {
     position: absolute;
     width: 100%;
-    height: 6.2%;
-    left: 0%;
-    top: 10.56%;
+    height: 70px;
+    top: 120px;
     background: #273352;
+    z-index: 99;
+}
+
+/* ==================== СТРАНИЦА "О НАС" (index.html) ==================== */
+
+.main-content {
+    position: absolute;
+    top: 190px;
+    left: 0;
+    width: 100%;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+
+.red-section {
+    position: absolute;
+    left: 8.7%;
+    right: 8.7%;
+    top: 0;
+    height: 400px;
+    background: #651413;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.red-content-center {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    padding-left: 100px; /* Сдвиг вправо */
+    box-sizing: border-box;
+}
+
+.main-heading {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 112px;
+    line-height: 1;
+    color: #FFFFFF;
+    margin: 0;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.tagline {
+    flex: 1;
+}
+
+.sub-heading {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.4;
+    color: #FFFFFF;
+    margin: 10px 0;
+}
+
+.text-block {
+    position: absolute;
+    left: 8.72%;
+    width: 80%;
+    max-width: 1200px;
+    top: 450px;
+}
+
+.text-paragraph {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+/* ==================== СТРАНИЦА "AI-КОНСТРУКТОР" ==================== */
+
+.constructor-wrapper {
+    display: flex;
+    gap: 50px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    margin-top: 190px;
+}
+
+.image-container {
+    flex: 1;
+    min-height: 700px;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.constructor-content {
+    flex: 1;
+    padding-top: 50px;
+}
+
+.constructor-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 58px;
+    line-height: 71px;
+    color: #000000;
+    margin-bottom: 40px;
+}
+
+.request-box {
+    width: 100%;
+    height: 300px;
+    border: 2px solid #273352;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.request-label {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 36px;
+    color: #000000;
+}
+
+.generate-btn {
+    background: #651413;
+    color: #ffffff;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ==================== СТРАНИЦА "КОНТАКТЫ" ==================== */
+
+.content {
+    position: absolute;
+    top: 190px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    max-width: 90%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.contacts-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 64px;
+    line-height: 76px;
+    color: #273352;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border: 1px solid #273352;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.contact-label,
+.contact-value {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+    color: #273352;
+}
+
+.contact-value {
+    font-weight: 300;
+}
+
+/* ==================== СТРАНИЦА "ТОВАРЫ" ==================== */
+
+.products-container {
+    max-width: 1200px;
+    margin: 180px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 40px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-info {
+    padding: 16px;
+}
+
+.product-title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #000;
+    margin: 0 0 12px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.price {
+    font-weight: 600;
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.details {
+    display: none;
+    margin-top: 16px;
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+}
+
+.section-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #273352;
+    margin: 12px 0 6px 0;
+}
+
+.product-description p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #555;
+    margin: 0 0 6px 0;
+}
+
+.color-sample {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #000;
+    margin-left: 8px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.size-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.size-btn {
+    width: 40px;
+    height: 40px;
+    background: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.size-btn:hover {
+    background: #ccc;
+}
+
+.btn-more {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #273352;
+    color: #fff;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-more:hover {
+    background: #1a243b;
+}
+
+/* ==================== АДАПТИВНЫЕ МЕДИА-ЗАПРОСЫ ==================== */
+
+/* Планшеты (до 1024px) */
+@media (max-width: 1024px) {
+    .header { padding: 0 30px; }
+    .logo { left: 30px; }
+    .main-nav { gap: 30px; }
+    .nav-link { font-size: 15px; padding: 6px 10px; }
+
+    .red-content-center {
+        padding-left: 80px;
+        gap: 20px;
+    }
+    .main-heading { font-size: 96px; }
+    .sub-heading { font-size: 36px; }
+    .text-block { width: 90%; left: 5%; }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    .header {
+        height: 100px;
+        padding: 0 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .logo {
+        position: static;
+        margin-bottom: 10px;
+    }
+    .main-nav {
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 0;
+        gap: 15px;
+    }
+    .nav-link {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+    .blue-stripe {
+        top: 100px;
+        height: 60px;
+    }
+
+    .main-content,
+    .constructor-wrapper,
+    .content {
+        top: 160px;
+        padding: 0 20px;
+    }
+
+    .red-content-center {
+        flex-direction: column;
+        text-align: center;
+        padding-left: 20px;
+        gap: 10px;
+    }
+
+    .main-heading {
+        font-size: 64px;
+    }
+
+    .sub-heading {
+        font-size: 28px;
+        margin: 8px 0;
+    }
+
+    .text-block {
+        width: 90%;
+        left: 5%;
+    }
+}
+
+/* Очень маленькие экраны (до 480px) */
+@media (max-width: 480px) {
+    .main-nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .nav-link {
+        font-size: 13px;
+        padding: 4px 6px;
+    }
+
+    .red-content-center {
+        padding-left: 0;
+    }
+
+    .main-heading {
+        font-size: 48px;
+    }
+
+    .sub-heading {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+
+    .contact-label,
+    .contact-value { font-size: 20px; }
+
+    .product-title { font-size: 16px; }
+    .price { font-size: 18px; }
+    .btn-more { font-size: 13px; }
 }

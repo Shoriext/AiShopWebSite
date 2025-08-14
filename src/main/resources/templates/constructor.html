@@ -8,166 +8,161 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
     <style>
-        /* Общие стили */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            width: 1920px;
-            height: 1080px;
-            background: #fff;
-        }
-
-        /* Хэдер как в products */
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 50px;
-            box-sizing: border-box;
-            z-index: 100;
-        }
-
-        .logo {
-            height: 80px;
-            width: auto;
-            position: absolute;
-            left: 50px;
-        }
-
-        .logo img {
-            height: 100%;
-            width: auto;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .nav-link {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #273352;
-            text-decoration: none;
-            text-transform: uppercase;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            padding: 8px 12px;
-        }
-
-        .nav-link.active {
-            font-weight: 600;
-            border-bottom: 2px solid #273352;
-        }
-
-        .blue-stripe {
-            position: absolute;
-            width: 100%;
-            height: 70px;
-            top: 120px;
-            background: #273352;
-        }
-
-        /* Основной контент */
+        /* Основной контейнер — мобильная версия */
         .constructor-wrapper {
-            position: absolute;
-            top: 190px;
-            left: 0;
-            width: 100%;
             display: flex;
-            padding: 0 50px;
+            flex-direction: column;
+            margin-top: 190px;
+            padding: 0 20px;
             box-sizing: border-box;
-            gap: 50px;
+            gap: 40px;
         }
 
-        /* Левая часть с изображением */
+        .image-container,
+        .constructor-content {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .image-container {
-            width: 50%;
-            min-height: 700px;
+            min-height: 300px;
             background: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 20px;
         }
 
         .image-container img {
             max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
+            max-height: 300px;
             object-fit: contain;
-        }
-
-        /* Правая часть с конструктором */
-        .constructor-content {
-            width: 50%;
-            padding-top: 50px;
         }
 
         .constructor-title {
             font-family: 'Montserrat';
-            font-style: normal;
             font-weight: 500;
-            font-size: 58px;
-            line-height: 71px;
+            font-size: 48px;
+            line-height: 1.2;
             color: #000000;
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .request-box {
             width: 100%;
-            height: 300px;
+            height: 180px;
             border: 2px solid #273352;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         .request-label {
             font-family: 'Montserrat';
-            font-style: normal;
             font-weight: 300;
-            font-size: 24px;
-            line-height: 36px;
+            font-size: 20px;
+            line-height: 1.4;
             color: #000000;
         }
 
         .generate-btn {
-            background: #651413;
-            color: #ffffff;
+            width: 100%;
+            padding: 14px;
             font-family: 'Montserrat';
-            font-style: normal;
             font-weight: 500;
-            font-size: 24px;
-            line-height: 29px;
-            padding: 15px 30px;
+            font-size: 20px;
+            color: #ffffff;
+            background: #651413;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            float: right;
+            text-align: center;
+        }
+
+        /* =============== АДАПТИВНОСТЬ: ДЕСКТОП (как раньше) =============== */
+
+        @media (min-width: 769px) {
+            .constructor-wrapper {
+                flex-direction: row;
+                align-items: flex-start; /* Ключевое изменение — выравнивание сверху */
+                padding: 0 50px;
+                gap: 50px;
+                margin-top: 190px;
+            }
+
+            .image-container,
+            .constructor-content {
+                width: 50%;
+                max-width: none;
+                margin: 0;
+            }
+
+            .image-container {
+                min-height: 700px;
+                padding: 40px;
+            }
+
+            .image-container img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
+            .constructor-title {
+                font-size: 58px;
+                line-height: 71px;
+                text-align: left; /* Слева, как в оригинале */
+                margin-bottom: 40px;
+            }
+
+            .request-box {
+                height: 300px;
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+
+            .request-label {
+                font-size: 24px;
+                line-height: 36px;
+            }
+
+            .generate-btn {
+                font-size: 24px;
+                padding: 15px 30px;
+                width: auto; /* Кнопка по содержимому */
+            }
+        }
+
+        /* Мелкие экраны */
+        @media (max-width: 480px) {
+            .constructor-wrapper {
+                margin-top: 160px;
+                padding: 0 15px;
+            }
+
+            .constructor-title {
+                font-size: 36px;
+                line-height: 1.3;
+            }
+
+            .request-label {
+                font-size: 18px;
+            }
+
+            .generate-btn {
+                font-size: 18px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Хэдер как в products -->
     <header class="header">
         <div class="logo">
             <img src="images/logo.svg" alt="Ai Wear Logo">
         </div>
         <nav class="main-nav">
-            <!-- Ссылки через Thymeleaf -->
             <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
             <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
             <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
@@ -183,15 +178,15 @@
             <div class="image-container">
                 <img src="images/ai.jpg" alt="AI Конструктор">
             </div>
-            
+
             <!-- Правая часть - конструктор -->
             <div class="constructor-content">
                 <h1 class="constructor-title">AI-КОНСТРУКТОР</h1>
-                
+
                 <div class="request-box">
                     <span class="request-label">Напишите здесь свой запрос</span>
                 </div>
-                
+
                 <button class="generate-btn">СГЕНЕРИРОВАТЬ</button>
             </div>
         </div>

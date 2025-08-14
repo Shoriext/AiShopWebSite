@@ -7,6 +7,16 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Только для страницы "Товары": отступ от синей полоски */
+        .products-container {
+            margin-top: 220px; /* Было 180px — увеличим на 40px */
+        }
+
+        /* Адаптивность — на мобильных можно уменьшить, если нужно */
+        @media (max-width: 768px) {
+            .products-container {
+                margin-top: 200px; /* Адаптивный отступ */
+            }
         /* Общие стили */
         body {
             margin: 0;
@@ -238,6 +248,7 @@
     </style>
 </head>
 <body>
+
 <header class="header">
     <div class="logo">
         <img src="images/logo.svg" alt="Ai Wear Logo">
@@ -338,22 +349,20 @@
 
             <!-- Можно добавить больше товаров -->
             <!-- <div class="product-card"> ... </div> -->
-
         </div>
-    </div>
-</main>
+    </main>
 
-<script>
-    function toggleDetails(button) {
-        const details = button.nextElementSibling;
-        if (details.style.display === "block") {
-            details.style.display = "none";
-            button.textContent = "Подробнее";
-        } else {
-            details.style.display = "block";
-            button.textContent = "Скрыть";
+    <script>
+        function toggleDetails(button) {
+            const details = button.nextElementSibling;
+            if (details.style.display === "block") {
+                details.style.display = "none";
+                button.textContent = "Подробнее";
+            } else {
+                details.style.display = "block";
+                button.textContent = "Скрыть";
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>

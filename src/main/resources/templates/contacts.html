@@ -6,140 +6,13 @@
     <title>Ai Wear - Контакты</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        /* Общие стили */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            width: 1920px;
-            height: 1080px;
-            background: #fff;
-        }
-
-        /* Хэдер из products.html — абсолютный, с центрированной навигацией */
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 50px;
-            box-sizing: border-box;
-            z-index: 100;
-        }
-
-        .logo {
-            height: 80px;
-            width: auto;
-            position: absolute;
-            left: 50px;
-        }
-
-        .logo img {
-            height: 100%;
-            width: auto;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .nav-link {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #273352;
-            text-decoration: none;
-            text-transform: uppercase;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            padding: 8px 12px;
-        }
-
-        .nav-link.active {
-            font-weight: 600;
-            border-bottom: 2px solid #273352;
-        }
-
-        /* Синяя полоса под хедером — как в products.html */
-        .blue-stripe {
-            position: absolute;
-            width: 100%;
-            height: 70px;
-            top: 120px;
-            background: #273352;
-        }
-
-        /* Главный контент */
-        .content {
-            position: absolute;
-            top: 190px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1200px;
-            padding: 0 50px;
-            box-sizing: border-box;
-        }
-
-        /* Заголовок "КОНТАКТЫ" */
-        .contacts-title {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 64px;
-            line-height: 76px;
-            color: #273352;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        /* Блок с контактной информацией */
-        .contact-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px;
-            border: 1px solid #273352;
-            border-radius: 10px;
-        }
-
-        .contact-label {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 30px;
-            color: #273352;
-        }
-
-        .contact-value {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 300;
-            font-size: 24px;
-            line-height: 30px;
-            color: #273352;
-        }
-    </style>
 </head>
 <body>
-    <!-- Хэдер из products.html -->
     <header class="header">
         <div class="logo">
             <img src="images/logo.svg" alt="Ai Wear Logo">
         </div>
         <nav class="main-nav">
-            <!-- Ссылки через Thymeleaf -->
             <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
             <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
             <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
@@ -147,15 +20,10 @@
         </nav>
     </header>
 
-    <!-- Синяя полоса -->
     <div class="blue-stripe"></div>
 
-    <!-- Основной контент -->
     <div class="content">
-        <!-- Заголовок "КОНТАКТЫ" -->
         <h1 class="contacts-title">КОНТАКТЫ</h1>
-
-        <!-- Блок с контактной информацией -->
         <div class="contact-info">
             <div>
                 <span class="contact-label">E-mail:</span>

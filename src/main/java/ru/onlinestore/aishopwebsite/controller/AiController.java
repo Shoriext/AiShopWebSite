@@ -15,7 +15,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AiController {
 
-    private final GenApiClient genApiClient;
+    @Autowired
+    GenApiClient genApiClient;
 
 
     @GetMapping("/form")

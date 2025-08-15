@@ -1,10 +1,11 @@
 package ru.onlinestore.aishopwebsite.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,8 +15,9 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Service
-public class AiService {
+public class GenApiClient {
 
     @Value("${api.key}")
     private static String API_KEY;
@@ -24,24 +26,24 @@ public class AiService {
 
     private static final Gson gson = new Gson();
 
-    public static String aiGenerateImg(String prompt) throws IOException, InterruptedException {
+    public static String aiGenerateImg(String prompt) throws IOException, InterruptedException, JsonProcessingException {
         HttpClient client = HttpClient.newHttpClient();
 
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode input = mapper.createObjectNode();
 
-        input.put( "prompt", prompt);
+        input.put("prompt", prompt);
 
         String json = mapper.writeValueAsString(input);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL))
                 .headers(
-                        "Content-Type", "application/json" ,
-                        "Accept", "application/json" ,
+                        "Content-Type", "application/json",
+                        "Accept", "application/json",
                         "Authorization", "Bearer " + API_KEY
-                        )
+                )
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
@@ -63,7 +65,6 @@ public class AiService {
                 .build();
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {

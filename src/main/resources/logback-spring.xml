@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- Стандартные настройки Spring Boot -->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <!-- JSON Console Appender -->
+    <!-- 🖨️ Appender: Красивые логи в консоль (для разработки) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 📦 Appender: JSON логи для Loki (Promtail) -->
+    <appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>/app/logs/app.log</file>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <message/>
+                <loggerName/>
+                <level/>
+                <threadName/>
+                <mdc/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <!-- 📁 Appender: JSON в stdout (альтернатива файлу, если хочешь в Docker) -->
+    <!-- Раскомментируй, если хочешь JSON в stdout -->
+    <!--
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -10,13 +36,23 @@
                 <message/>
                 <loggerName/>
                 <level/>
+                <threadName/>
                 <mdc/>
                 <stackTrace/>
             </providers>
         </encoder>
     </appender>
+    -->
 
+    <!-- 🧩 Корневой логгер -->
     <root level="INFO">
-        <appender-ref ref="JSON_CONSOLE"/>
+        <appender-ref ref="CONSOLE"/>
+        <!-- Выбери ОДИН из двух вариантов ниже -->
+
+        <!-- Вариант A: JSON в файл (лучше для Docker + Promtail) -->
+        <appender-ref ref="JSON_FILE"/>
+
+        <!-- Вариант B: JSON в stdout (если не хочешь файл) -->
+        <!-- <appender-ref ref="JSON_CONSOLE"/> -->
     </root>
 </configuration>

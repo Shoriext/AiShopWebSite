@@ -2,11 +2,14 @@ package ru.onlinestore.aishopwebsite.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.onlinestore.aishopwebsite.service.GenApiClient;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,23 +28,29 @@ public class AiController {
     }
 
     @PostMapping("/generate")
-    public String generateImage(@RequestParam String prompt, Model model) {
+    public ResponseEntity<Map<String, Object>> generateImage(@RequestParam String prompt, Model model) {
         try {
-            String taskId = GenApiClient.aiGenerateImg(prompt);
+            //String taskId = GenApiClient.aiGenerateImg(prompt);
+            String taskId = "21995011";
             String imageUrl = waitForImage(taskId);
 
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("imageUrl", imageUrl);
 
-            model.addAttribute("imageUrl", imageUrl);
-            return "ai/result"; // шаблон result.html
+            return ResponseEntity.ok(response);
+             // шаблон result.html
         } catch (Exception e) {
-            model.addAttribute("error", "Ошибка генерации: " + e.getMessage());
-            return "ai/form";
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Ошибка генерации: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
 
     private String waitForImage(String taskId) throws InterruptedException {
-        for (int i = 0; i < 30; i++) { // максимум 30 попыток × 2 сек = 60 сек
+        for (int i = 0; i < 60; i++) { // максимум 30 попыток × 2 сек = 60 сек
             try {
                 Map<String, Object> status = genApiClient.getStatus(taskId);
                 String responseStatus = (String) status.get("status");
@@ -59,10 +68,9 @@ public class AiController {
                     throw new RuntimeException("Ошибка в генерации: " + status.get("error"));
                 }
             } catch (Exception e) {
-                // Логируем, но продолжаем
                 System.err.println("Проверка статуса... ошибка: " + e.getMessage());
             }
-            Thread.sleep(2000); // ждём 2 секунды
+            Thread.sleep(5000); // ждём 2 секунды
         }
         throw new RuntimeException("Таймаут ожидания изображения");
     }

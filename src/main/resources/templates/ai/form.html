@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Генерация изображения</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Сгенерируйте изображение с помощью Kolors</h2>
+<form method="post" action="/ai/generate">
+    <label for="prompt">Описание (на русском):</label><br>
+    <input type="text" id="prompt" name="prompt" size="80" required><br><br>
+    <button type="submit">Сгенерировать</button>
+</form>
+
+<div th:if="${error}" style="color: red; margin-top: 20px;">
+    <strong>Ошибка:</strong> <span th:text="${error}"></span>
+</div>
+</body>
+</html>

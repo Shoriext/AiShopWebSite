@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.onlinestore.aishopwebsite.service.GenApiClient;
 
-import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +26,7 @@ public class AiController {
     @PostMapping("/generate")
     public String generateImage(@RequestParam String prompt, Model model) {
         try {
-            String taskId = genApiClient.aiGenerateImg(prompt);
+            String taskId = GenApiClient.aiGenerateImg(prompt);
             String imageUrl = waitForImage(taskId);
 
 
@@ -39,6 +37,7 @@ public class AiController {
             return "ai/form";
         }
     }
+
 
     private String waitForImage(String taskId) throws InterruptedException {
         for (int i = 0; i < 30; i++) { // максимум 30 попыток × 2 сек = 60 сек
@@ -52,7 +51,7 @@ public class AiController {
                         String url = ((String) result.get(0)).trim();
 
                         System.out.println(url);
-                        
+
                         return url;
                     }
                 } else if ("error".equals(responseStatus)) {

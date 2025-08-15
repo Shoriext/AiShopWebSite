@@ -21,7 +21,7 @@ import java.util.*;
 public class GenApiClient {
 
     @Value("${api.key}")
-    private static String API_KEY;
+    private String API_KEY;
 
     private static final String STATUS_URL = "https://api.gen-api.ru/api/v1/request/get/";
     private static String URL = "https://api.gen-api.ru/api/v1/networks/kling-image";
@@ -31,7 +31,7 @@ public class GenApiClient {
 
     private static final Gson gson = new Gson();
 
-    public static String aiGenerateImg(String prompt) throws IOException, InterruptedException, JsonProcessingException {
+    public String aiGenerateImg(String prompt) throws IOException, InterruptedException, JsonProcessingException {
 
         ObjectNode input = objectMapper.createObjectNode();
 
@@ -44,10 +44,11 @@ public class GenApiClient {
                 .headers(
                         "Content-Type", "application/json",
                         "Accept", "application/json",
-                        "Authorization", "Bearer sk-sM8IIBebnaJ7vRgvZO6rOfuQ5SyIAefRrCER0OAOxoyrQWKTsko3HmkpeChk"
+                        "Authorization", "Bearer " + API_KEY
                 )
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
+
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -66,7 +67,7 @@ public class GenApiClient {
     public Map<String, Object> getStatus(String taskId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(STATUS_URL + taskId))
-                .header("Authorization", "Bearer sk-sM8IIBebnaJ7vRgvZO6rOfuQ5SyIAefRrCER0OAOxoyrQWKTsko3HmkpeChk")
+                .header("Authorization", "Bearer "+ API_KEY)
                 .GET()
                 .build();
 

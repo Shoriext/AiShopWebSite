@@ -6,6 +6,7 @@ target/
 src/main/resources/application.properties
 
 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -14,7 +15,9 @@ src/main/resources/application.properties
 .settings
 .springBeans
 .sts4-cache
-
+.env
+*.key
+*.pem
 ### IntelliJ IDEA ###
 .idea
 *.iws

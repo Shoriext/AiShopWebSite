@@ -29,16 +29,14 @@ public class GenApiClient {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final Gson gson = new Gson();
-
     public String aiGenerateImg(String prompt) throws IOException, InterruptedException, JsonProcessingException {
-
+        HttpClient httpClient1 = HttpClient.newHttpClient();
         ObjectNode input = objectMapper.createObjectNode();
 
         input.put("prompt", prompt);
 
         String json = objectMapper.writeValueAsString(input);
-
+        
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL))
                 .headers(
@@ -50,7 +48,7 @@ public class GenApiClient {
                 .build();
 
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = httpClient1.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200 || response.statusCode() == 201) {
             JsonNode root = objectMapper.readTree(response.body());

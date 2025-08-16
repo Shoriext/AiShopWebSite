@@ -19,7 +19,7 @@ import java.util.Map;
 public class AiController {
 
     @Autowired
-    GenApiClient genApiClient;
+    private final GenApiClient genApiClient;
 
 
     @GetMapping("/form")
@@ -30,8 +30,9 @@ public class AiController {
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Object>> generateImage(@RequestParam String prompt, Model model) {
         try {
-            //String taskId = GenApiClient.aiGenerateImg(prompt);
-            String taskId = "21995011";
+            String taskId;
+            taskId = genApiClient.aiGenerateImg(prompt);
+
             String imageUrl = waitForImage(taskId);
 
             Map<String, Object> response = new HashMap<>();

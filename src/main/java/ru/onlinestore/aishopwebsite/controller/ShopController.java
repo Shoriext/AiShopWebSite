@@ -36,6 +36,7 @@ public class ShopController {
     @GetMapping("/products")
     public String products(Model model, HttpSession session) {
         model.addAttribute("products", products);
+        model.addAttribute("activePage", "products");
         model.addAttribute("cart", cartService.getCart(session)); // если нужно в шаблоне
         return "products";
     }

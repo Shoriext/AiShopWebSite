@@ -16,7 +16,7 @@ scrape_configs:
     relabel_configs:
       # Оставляем только контейнер с нужным именем
       - source_labels: [__meta_docker_container_name]
-        regex: "/app"
+        regex: ".*app.*"
         action: keep
       # Делаем лейблы для Loki
       - source_labels: [__meta_docker_container_name]

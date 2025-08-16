@@ -15,7 +15,7 @@ body {
 /* ==================== ШАПКА САЙТА ==================== */
 
 .header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -26,6 +26,8 @@ body {
     padding: 0 50px;
     box-sizing: border-box;
     z-index: 100;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -44,7 +46,6 @@ body {
     display: flex;
     gap: 40px;
     align-items: center;
-    margin-top: 20px;
 }
 
 .nav-link {
@@ -74,7 +75,7 @@ body {
 /* ==================== СИНЯЯ ПОЛОСА ==================== */
 
 .blue-stripe {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 70px;
     top: 120px;
@@ -82,30 +83,33 @@ body {
     z-index: 99;
 }
 
-/* ==================== СТРАНИЦА "О НАС" (index.html) ==================== */
+/* ==================== ОСНОВНОЙ КОНТЕНТ ==================== */
 
 .main-content {
-    position: absolute;
-    top: 190px;
-    left: 0;
+    margin-top: 190px;
     width: 100%;
     padding: 0 50px;
     box-sizing: border-box;
 }
 
-.red-section {
-    position: absolute;
-    left: 8.7%;
-    right: 8.7%;
-    top: 0;
-    height: 400px;
-    background: #651413;
-    padding: 0;
+.content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 190px auto 0;
+    padding: 0 20px;
     box-sizing: border-box;
+}
+
+/* ==================== СТРАНИЦА "О НАС" ==================== */
+
+.red-section {
+    width: 82.6%;
+    height: 400px;
+    margin: 0 auto;
+    background: #651413;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
 }
 
 .red-content-center {
@@ -114,7 +118,7 @@ body {
     gap: 30px;
     width: 100%;
     max-width: 1400px;
-    padding-left: 100px; /* Сдвиг вправо */
+    padding-left: 100px;
     box-sizing: border-box;
 }
 
@@ -145,11 +149,11 @@ body {
 }
 
 .text-block {
-    position: absolute;
-    left: 8.72%;
-    width: 80%;
+    width: 82.6%;
     max-width: 1200px;
-    top: 450px;
+    margin: 30px 0 0 8.7%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .text-paragraph {
@@ -167,9 +171,11 @@ body {
 .constructor-wrapper {
     display: flex;
     gap: 50px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 190px auto 0;
     padding: 0 50px;
     box-sizing: border-box;
-    margin-top: 190px;
 }
 
 .image-container {
@@ -180,12 +186,35 @@ body {
     justify-content: center;
     align-items: center;
     padding: 40px;
+    position: relative;
+    overflow: hidden;
 }
 
 .image-container img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+
+.print-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 20%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.print-area.show {
+    opacity: 1;
 }
 
 .constructor-content {
@@ -203,21 +232,19 @@ body {
     margin-bottom: 40px;
 }
 
-.request-box {
+.editable-box {
     width: 100%;
     height: 300px;
     border: 2px solid #273352;
     padding: 20px;
     margin-bottom: 30px;
-}
-
-.request-label {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 24px;
     line-height: 36px;
     color: #000000;
+    resize: none;
 }
 
 .generate-btn {
@@ -232,20 +259,23 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.generate-btn:hover {
+    background-color: #5b1315;
+}
+
+.error-message {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 10px;
+    min-height: 20px;
+    text-align: center;
+    font-style: italic;
 }
 
 /* ==================== СТРАНИЦА "КОНТАКТЫ" ==================== */
-
-.content {
-    position: absolute;
-    top: 190px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1200px;
-    max-width: 90%;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
 
 .contacts-title {
     font-family: 'Montserrat';
@@ -286,34 +316,42 @@ body {
 /* ==================== СТРАНИЦА "ТОВАРЫ" ==================== */
 
 .products-container {
-    max-width: 1200px;
-    margin: 180px auto;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 190px auto 0;
+    padding: 0 50px;
     box-sizing: border-box;
+}
+
+.products-row {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 10px 0;
 }
 
 .product-card {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 40px;
+    width: 100%;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .product-image-container {
     width: 100%;
-    height: 300px;
+    height: 320px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f9f9f9;
+    background: #f8f8f8;
 }
 
 .product-image {
@@ -323,95 +361,46 @@ body {
 }
 
 .product-info {
-    padding: 16px;
+    padding: 24px;
 }
 
 .product-title {
     font-weight: 500;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.4;
     color: #000;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 60px;
 }
 
 .price {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 24px;
     color: #000;
-    margin-bottom: 16px;
-}
-
-.details {
-    display: none;
-    margin-top: 16px;
-    border-top: 1px solid #eee;
-    padding-top: 16px;
-}
-
-.section-title {
-    font-weight: 500;
-    font-size: 14px;
-    color: #273352;
-    margin: 12px 0 6px 0;
-}
-
-.product-description p {
-    font-size: 13px;
-    line-height: 1.5;
-    color: #555;
-    margin: 0 0 6px 0;
-}
-
-.color-sample {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: #000;
-    margin-left: 8px;
-    vertical-align: middle;
-    border-radius: 50%;
-}
-
-.size-options {
-    display: flex;
-    gap: 10px;
-    margin-top: 6px;
-}
-
-.size-btn {
-    width: 40px;
-    height: 40px;
-    background: #e0e0e0;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #000;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.size-btn:hover {
-    background: #ccc;
+    margin: 0 0 20px;
 }
 
 .btn-more {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: #273352;
     color: #fff;
     border: none;
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
+    border-radius: 8px;
+    margin-top: 16px;
     transition: background 0.2s;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn-more:hover {
@@ -422,18 +411,53 @@ body {
 
 /* Планшеты (до 1024px) */
 @media (max-width: 1024px) {
-    .header { padding: 0 30px; }
-    .logo { left: 30px; }
-    .main-nav { gap: 30px; }
-    .nav-link { font-size: 15px; padding: 6px 10px; }
+    .header {
+        padding: 0 30px;
+    }
+    .logo {
+        left: 30px;
+        height: 70px;
+    }
+    .main-nav {
+        gap: 30px;
+    }
+    .nav-link {
+        font-size: 15px;
+        padding: 6px 10px;
+    }
+
+    .blue-stripe {
+        top: 120px;
+    }
 
     .red-content-center {
-        padding-left: 80px;
+        padding-left: 60px;
         gap: 20px;
     }
-    .main-heading { font-size: 96px; }
-    .sub-heading { font-size: 36px; }
-    .text-block { width: 90%; left: 5%; }
+    .main-heading {
+        font-size: 96px;
+    }
+    .sub-heading {
+        font-size: 36px;
+    }
+    .text-block {
+        width: 90%;
+        margin: 30px auto 0;
+    }
+
+    .constructor-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .image-container {
+        min-height: 400px;
+    }
+
+    .products-container,
+    .main-content,
+    .content {
+        padding: 0 30px;
+    }
 }
 
 /* Мобильные устройства (до 768px) */
@@ -442,84 +466,193 @@ body {
         height: 100px;
         padding: 0 20px;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
     .logo {
         position: static;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        height: 60px;
     }
     .main-nav {
         width: 100%;
         justify-content: space-around;
-        margin-top: 0;
-        gap: 15px;
+        gap: 12px;
+        flex-wrap: wrap;
     }
     .nav-link {
         font-size: 14px;
         padding: 6px 8px;
     }
+
     .blue-stripe {
         top: 100px;
         height: 60px;
     }
 
     .main-content,
+    .content,
     .constructor-wrapper,
-    .content {
-        top: 160px;
+    .products-container {
+        margin-top: 160px;
         padding: 0 20px;
     }
 
+    .red-section {
+        width: 90%;
+        height: auto;
+        padding: 30px 0;
+    }
     .red-content-center {
         flex-direction: column;
         text-align: center;
-        padding-left: 20px;
-        gap: 10px;
+        padding-left: 0;
+        gap: 15px;
     }
-
     .main-heading {
         font-size: 64px;
+        line-height: 1.1;
     }
-
     .sub-heading {
         font-size: 28px;
         margin: 8px 0;
     }
-
     .text-block {
         width: 90%;
-        left: 5%;
+        margin: 20px auto 0;
+    }
+
+    .constructor-title,
+    .contacts-title {
+        font-size: 48px;
+        line-height: 1.2;
+        margin-bottom: 30px;
+    }
+
+    .editable-box {
+        height: 180px;
+        font-size: 20px;
+        line-height: 1.4;
+    }
+
+    .generate-btn {
+        font-size: 20px;
+        padding: 14px;
+        width: 100%;
+    }
+
+    .contact-label,
+    .contact-value {
+        font-size: 20px;
+    }
+
+    .product-image-container {
+        height: 280px;
+    }
+    .product-title {
+        font-size: 18px;
+        height: auto;
+        -webkit-line-clamp: 2;
+    }
+    .price {
+        font-size: 20px;
+    }
+    .btn-more {
+        font-size: 15px;
     }
 }
 
 /* Очень маленькие экраны (до 480px) */
 @media (max-width: 480px) {
+    .header {
+        height: 90px;
+        padding: 0 15px;
+        gap: 5px;
+    }
+    .logo {
+        height: 50px;
+    }
     .main-nav {
+        gap: 8px;
         flex-wrap: wrap;
-        gap: 10px;
     }
     .nav-link {
-        font-size: 13px;
+        font-size: 12px;
         padding: 4px 6px;
     }
 
-    .red-content-center {
-        padding-left: 0;
+    .blue-stripe {
+        top: 90px;
+        height: 50px;
+    }
+
+    .main-content,
+    .content,
+    .constructor-wrapper,
+    .products-container {
+        margin-top: 140px;
+        padding: 0 15px;
     }
 
     .main-heading {
         font-size: 48px;
+        line-height: 1.1;
     }
-
     .sub-heading {
         font-size: 24px;
+        margin: 6px 0;
+    }
+    .text-block {
+        width: 95%;
+        margin: 15px auto 0;
+    }
+
+    .constructor-title,
+    .contacts-title {
+        font-size: 36px;
+        line-height: 1.3;
+        margin-bottom: 25px;
+    }
+
+    .editable-box {
+        height: 140px;
+        font-size: 18px;
         line-height: 1.4;
     }
 
-    .contact-label,
-    .contact-value { font-size: 20px; }
+    .generate-btn {
+        font-size: 18px;
+        padding: 12px;
+    }
 
-    .product-title { font-size: 16px; }
-    .price { font-size: 18px; }
-    .btn-more { font-size: 13px; }
+    .contact-label,
+    .contact-value {
+        font-size: 18px;
+    }
+
+    .product-image-container {
+        height: 240px;
+    }
+    .product-title {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+    .price {
+        font-size: 18px;
+    }
+    .btn-more {
+        font-size: 13px;
+        padding: 12px;
+    }
+}
+
+/* Дополнительная адаптация для вертикальных мобильных экранов */
+@media (max-height: 600px) and (max-width: 768px) {
+    .image-container {
+        min-height: 300px;
+    }
+    .product-image-container {
+        height: 240px;
+    }
 }

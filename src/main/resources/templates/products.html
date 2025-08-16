@@ -6,366 +6,43 @@
     <title>Ai Wear - Товары</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Только для страницы "Товары": отступ от синей полоски */
-        .products-container {
-            margin-top: 220px; /* Было 180px — увеличим на 40px */
-        }
-
-        /* Адаптивность — на мобильных можно уменьшить, если нужно */
-        @media (max-width: 768px) {
-            .products-container {
-                margin-top: 200px; /* Адаптивный отступ */
-            }
-        /* Общие стили */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: #f5f5f5;
-            color: #273352;
-        }
-
-        /* Хэдер */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 50px;
-            box-sizing: border-box;
-            background: #fff;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            height: 80px;
-            width: auto;
-            position: absolute;
-            left: 50px;
-        }
-
-        .logo img {
-            height: 100%;
-            width: auto;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .nav-link {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #273352;
-            text-decoration: none;
-            text-transform: uppercase;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            padding: 8px 12px;
-        }
-
-        .nav-link.active {
-            font-weight: 600;
-            border-bottom: 2px solid #273352;
-        }
-
-        /* Контейнер для карточек — центрированный, с прокруткой */
-        .products-container {
-            max-width: 100%;
-            margin: 180px auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center; /* Центрируем содержимое */
-        }
-
-        .products-row {
-            display: flex;
-            gap: 30px;
-            padding: 10px 0;
-            min-width: min-content;
-            max-width: 1200px; /* Ограничиваем ширину, но остаётся в центре */
-            overflow-x: auto;
-            scrollbar-width: thin;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 15px;
-        }
-
-        /* Карточка товара (больше, но компактно) */
-        .product-card {
-            width: 340px;
-            background: #fff;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .product-image-container {
-            width: 100%;
-            height: 240px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f8f8f8;
-        }
-
-        .product-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .product-info {
-            padding: 16px;
-        }
-
-        .product-title {
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 1.4;
-            color: #000;
-            margin: 0 0 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 44px;
-        }
-
-        .price {
-            font-weight: 600;
-            font-size: 20px;
-            color: #000;
-            margin: 0 0 14px;
-        }
-
-        .details {
-            display: none;
-            margin-top: 14px;
-            border-top: 1px solid #eee;
-            padding-top: 12px;
-        }
-
-        .section-title {
-            font-weight: 500;
-            font-size: 14px;
-            color: #273352;
-            margin: 10px 0 6px 0;
-        }
-
-        .product-description p {
-            font-size: 13px;
-            line-height: 1.5;
-            color: #555;
-            margin: 0 0 4px;
-        }
-
-        .color-sample {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            background: #000;
-            margin-left: 8px;
-            vertical-align: middle;
-            border-radius: 50%;
-        }
-
-        .size-options {
-            display: flex;
-            gap: 10px;
-            margin-top: 6px;
-        }
-
-        .size-btn {
-            width: 38px;
-            height: 38px;
-            background: #e0e0e0;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #000;
-            cursor: pointer;
-        }
-
-        .size-btn:hover {
-            background: #ccc;
-        }
-
-        .btn-more {
-            display: block;
-            width: 100%;
-            padding: 11px;
-            background: #273352;
-            color: #fff;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-top: 12px;
-            transition: background 0.2s;
-        }
-
-        .btn-more:hover {
-            background: #1a243b;
-        }
-
-        /* Скролл-бар (тонкий) */
-        .products-row::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .products-row::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 6px;
-        }
-
-        .products-row::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
-        }}
-
-    </style>
 </head>
 <body>
-
-<header class="header">
-    <div class="logo">
-        <img src="images/logo.svg" alt="Ai Wear Logo">
-    </div>
-    <nav class="main-nav">
-        <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
-        <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
-        <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
-        <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
-        <a href="/cart">🛒 Корзина (<span th:text="${#lists.size(cart)}">0</span>)</a>
-    </nav>
-</header>
-
-<div class="blue-stripe"></div>
-
-<main>
-    <div class="products-container">
-        <div class="products-row">
-            <th:block th:each="product : ${products}">
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-title" th:text="${product.name}"></h2>
-                        <p class="price" th:text="${#numbers.formatDecimal(product.price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</p>
-
-                        <!-- Форма добавления в корзину -->
-                        <form th:action="@{/cart/add}" method="post">
-                            <input type="hidden" name="productId" th:value="${product.id}">
-                            <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
-                        </form>
-                    </div>
-                </div>
-            </th:block>
+    <header class="header">
+        <div class="logo">
+            <img src="images/logo.svg" alt="Ai Wear Logo">
         </div>
-    </div>
+        <nav class="main-nav">
+            <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
+            <a th:href="@{/products}" class="nav-link" th:classappend="${activePage == 'products'} ? 'active' : ''">ТОВАРЫ</a>
+            <a th:href="@{/constructor}" class="nav-link" th:classappend="${activePage == 'constructor'} ? 'active' : ''">AI-КОНСТРУКТОР</a>
+            <a th:href="@{/contacts}" class="nav-link" th:classappend="${activePage == 'contacts'} ? 'active' : ''">КОНТАКТЫ</a>
+            <a href="/cart" class="nav-link">🛒 Корзина (<span th:text="${#lists.size(cart)}">0</span>)</a>
+        </nav>
+    </header>
 
-<!--    <div class="products-container">-->
-<!--        <div class="products-row">-->
-<!--            &lt;!&ndash; Товар 1: Футболка &ndash;&gt;-->
-<!--            <div class="product-card">-->
-<!--                <div class="product-image-container">-->
-<!--                    <img src="images/product1.jpg" alt="Футболка «Алфавит Студента»" class="product-image">-->
-<!--                </div>-->
-<!--                <div class="product-info">-->
-<!--                    <h2 class="product-title">Футболка «Алфавит Студента»</h2>-->
-<!--                    <p class="price">1990 руб.</p>-->
+    <div class="blue-stripe"></div>
 
-<!--                    &lt;!&ndash; Кнопка "Купить" — просто GET-запрос &ndash;&gt;-->
-<!--                    <a th:href="@{/order/buy(productId=${1}, productName='Футболка «Алфавит Студента»', price=1990)}"-->
-<!--                       class="btn-more">-->
-<!--                        КУПИТЬ-->
-<!--                    </a>-->
-
-
-<!--                    <button class="btn-more" onclick="toggleDetails(this)">Подробнее</button>-->
-<!--                    <div class="details">-->
-<!--                        <h3 class="section-title">Описание:</h3>-->
-<!--                        <div class="product-description">-->
-<!--                            <p>Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань</p>-->
-<!--                            <p>премиального качества обеспечивает комфорт в течение всего дня,</p>-->
-<!--                            <p>а стильный крой подходит для любого телосложения.</p>-->
-<!--                        </div>-->
-<!--                        <h3 class="section-title">Цвет:</h3>-->
-<!--                        <p>черный <span class="color-sample"></span></p>-->
-<!--                        <h3 class="section-title">Размеры:</h3>-->
-<!--                        <div class="size-options">-->
-<!--                            <button class="size-btn">S</button>-->
-<!--                            <button class="size-btn">M</button>-->
-<!--                            <button class="size-btn">L</button>-->
-<!--                            <button class="size-btn">XL</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Товар 2: Шоппер &ndash;&gt;-->
-<!--            <div class="product-card">-->
-<!--                <div class="product-image-container">-->
-<!--                    <img src="images/product2.jpg" alt="Шоппер «Алфавит Студента»" class="product-image">-->
-<!--                </div>-->
-<!--                <div class="product-info">-->
-<!--                    <h2 class="product-title">Шоппер «Алфавит Студента»</h2>-->
-<!--                    <p class="price">1490 руб.</p>-->
-<!--                    <button class="btn-more" >Купить</button>-->
-<!--                    <button class="btn-more" onclick="toggleDetails(this)">Подробнее</button>-->
-<!--                    <div class="details">-->
-<!--                        <h3 class="section-title">Описание:</h3>-->
-<!--                        <div class="product-description">-->
-<!--                            <p>Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном</p>-->
-<!--                            <p>— must-have для современного студента. Прочная ткань с плотными швами</p>-->
-<!--                            <p>выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.</p>-->
-<!--                        </div>-->
-<!--                        <h3 class="section-title">Цвет:</h3>-->
-<!--                        <p>черный <span class="color-sample"></span></p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <!-- Можно добавить больше товаров -->
-            <!-- <div class="product-card"> ... </div> -->
+    <main>
+        <div class="products-container">
+            <div class="products-row">
+                <th:block th:each="product : ${products}">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title" th:text="${product.name}"></h2>
+                            <p class="price" th:text="${#numbers.formatDecimal(product.price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</p>
+                            <form th:action="@{/cart/add}" method="post">
+                                <input type="hidden" name="productId" th:value="${product.id}">
+                                <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
+                            </form>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
         </div>
     </main>
-
-    <script>
-        function toggleDetails(button) {
-            const details = button.nextElementSibling;
-            if (details.style.display === "block") {
-                details.style.display = "none";
-                button.textContent = "Подробнее";
-            } else {
-                details.style.display = "block";
-                button.textContent = "Скрыть";
-            }
-        }
-    </script>
 </body>
 </html>

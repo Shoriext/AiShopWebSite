@@ -36,7 +36,7 @@ public class GenApiClient {
         input.put("prompt", prompt);
 
         String json = objectMapper.writeValueAsString(input);
-        
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(URL))
                 .headers(

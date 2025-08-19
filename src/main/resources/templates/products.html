@@ -6,6 +6,209 @@
     <title>Ai Wear - Товары</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Дополнительные стили для страницы товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 10px 0;
+            align-items: stretch;
+        }
+        
+        .product-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .product-image-container {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f8f8;
+            flex-shrink: 0;
+        }
+        
+        .product-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .product-title {
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 1.4;
+            color: #000;
+            margin: 0 0 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 60px;
+        }
+        
+        .product-details {
+            margin-bottom: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-description {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 1.4;
+            color: #000000;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        /* Выравнивание спецификаций между карточками */
+        .product-specs-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px 8px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .spec-label {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            color: #000000;
+            min-width: 70px;
+        }
+        
+        .spec-value {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            color: #000000;
+        }
+        
+        .price-row {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+        
+        .price-label {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            color: #000000;
+            min-width: 70px;
+        }
+        
+        .price {
+            font-weight: 600;
+            font-size: 24px;
+            color: #000;
+            margin: 0;
+        }
+        
+        .btn-more {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #273352;
+            color: #fff;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: auto;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .products-grid {
+                gap: 30px;
+            }
+            
+            .product-specs-grid {
+                gap: 10px 6px;
+            }
+            
+            .spec-label, .price-label {
+                min-width: 60px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                gap: 25px;
+            }
+            
+            .product-image-container {
+                height: 280px;
+            }
+            
+            .product-title {
+                font-size: 18px;
+                min-height: auto;
+            }
+            
+            .product-description {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .spec-label, .spec-value, .price-label {
+                font-size: 14px;
+            }
+            
+            .spec-label, .price-label {
+                min-width: 55px;
+            }
+            
+            .price {
+                font-size: 20px;
+            }
+            
+            .product-specs-grid {
+                gap: 8px 5px;
+            }
+            
+            .btn-more {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -25,22 +228,74 @@
 
     <main>
         <div class="products-container">
-            <div class="products-row">
-                <th:block th:each="product : ${products}">
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <h2 class="product-title" th:text="${product.name}"></h2>
-                            <p class="price" th:text="${#numbers.formatDecimal(product.price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</p>
-                            <form th:action="@{/cart/add}" method="post">
-                                <input type="hidden" name="productId" th:value="${product.id}">
-                                <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
-                            </form>
-                        </div>
+            <div class="products-grid">
+                <!-- Футболка -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img th:src="${products[0].imageUrl}" th:alt="${products[0].name}" class="product-image">
                     </div>
-                </th:block>
+                    <div class="product-info">
+                        <h2 class="product-title">Футболка «Алфавит Студента»</h2>
+                        
+                        <div class="product-details">
+                            <p class="product-description">
+                                Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань премиального качества обеспечивает комфорт в течение всего дня, а стильный крой подходит для любого телосложения.
+                            </p>
+                            
+                            <div class="product-specs-grid">
+                                <span class="spec-label">Цвет:</span>
+                                <span class="spec-value">черный</span>
+                                
+                                <span class="spec-label">Размеры:</span>
+                                <span class="spec-value">S, M, L, XL</span>
+                                
+                                <div class="price-row">
+                                    <span class="price-label">Цена:</span>
+                                    <span class="price" th:text="${#numbers.formatDecimal(products[0].price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${products[0].id}">
+                            <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Шоппер -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img th:src="${products[1].imageUrl}" th:alt="${products[1].name}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-title">Шоппер «Алфавит Студента»</h2>
+                        
+                        <div class="product-details">
+                            <p class="product-description">
+                                Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном — must-have для современного студента. Прочная ткань с плотными швами выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.
+                            </p>
+                            
+                            <div class="product-specs-grid">
+                                <span class="spec-label">Цвет:</span>
+                                <span class="spec-value">черный</span>
+                                
+                                <span class="spec-label">Размеры:</span>
+                                <span class="spec-value">единый размер</span>
+                                
+                                <div class="price-row">
+                                    <span class="price-label">Цена:</span>
+                                    <span class="price" th:text="${#numbers.formatDecimal(products[1].price, 2, 2, 'COMMA')} + ' руб.'">1 290,00 руб.</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${products[1].id}">
+                            <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

@@ -35,13 +35,20 @@
             <!-- Правая часть - конструктор -->
             <div class="constructor-content">
                 <h1 class="constructor-title">AI-КОНСТРУКТОР</h1>
+                
+                <!-- Описание с двумя строками, выровнено по "А" -->
+                <div class="constructor-description">
+                    <p class="desc-line-1">Здесь искусственный интеллект может сгенерировать изображение по вашему запросу.</p>
+                    <p class="desc-line-2">Картинка может не соответствовать вашим требованиям.</p>
+                </div>
 
                 <form id="ai-form" method="post" action="/ai/generate">
                     <input type="hidden" name="prompt" id="hidden-prompt" />
                     <textarea id="prompt-container" class="editable-box" placeholder="Напишите здесь свой запрос..."></textarea>
                 </form>
 
-                <button type="button" class="generate-btn" onclick="submitForm()">
+                <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
+                <button type="button" class="generate-btn" id="generate-btn" onclick="submitForm()">
                     СГЕНЕРИРОВАТЬ
                 </button>
 
@@ -56,7 +63,9 @@
             const hiddenInput = document.getElementById('hidden-prompt');
             const errorDiv = document.getElementById('error-message');
             const printArea = document.getElementById('print-area');
+            const btn = document.getElementById('generate-btn');
 
+            // Очистка предыдущих состояний
             errorDiv.textContent = '';
             printArea.style.backgroundImage = '';
             printArea.classList.remove('show');
@@ -69,8 +78,15 @@
                 return;
             }
 
+            // === Блокировка кнопки ===
+            btn.disabled = true;
+            btn.textContent = 'ГЕНЕРИРУЕТСЯ...';
+            btn.classList.add('btn-loading');
+
+            // Установка значения в скрытое поле
             hiddenInput.value = text;
 
+            // Отправка запроса
             fetch('/ai/generate', {
                 method: 'POST',
                 headers: {
@@ -84,12 +100,18 @@
                         printArea.style.backgroundImage = `url(${data.imageUrl})`;
                         printArea.classList.add('show');
                     } else {
-                        errorDiv.textContent = data.error;
+                        errorDiv.textContent = data.error || 'Не удалось сгенерировать изображение.';
                     }
                 })
                 .catch(err => {
                     console.error("Ошибка:", err);
                     errorDiv.textContent = "Не удалось сгенерировать изображение";
+                })
+                .finally(() => {
+                    // === Разблокировка кнопки после завершения ===
+                    btn.disabled = false;
+                    btn.textContent = 'СГЕНЕРИРОВАТЬ';
+                    btn.classList.remove('btn-loading');
                 });
         }
     </script>

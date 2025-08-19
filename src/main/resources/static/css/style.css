@@ -86,7 +86,7 @@ body {
 /* ==================== ОСНОВНОЙ КОНТЕНТ ==================== */
 
 .main-content {
-    margin-top: 190px;
+    margin-top: 220px;
     width: 100%;
     padding: 0 50px;
     box-sizing: border-box;
@@ -95,7 +95,7 @@ body {
 .content {
     width: 100%;
     max-width: 1200px;
-    margin: 190px auto 0;
+    margin: 220px auto 0;
     padding: 0 20px;
     box-sizing: border-box;
 }
@@ -109,43 +109,63 @@ body {
     background: #651413;
     display: flex;
     align-items: center;
-    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    object-fit: cover;
 }
 
 .red-content-center {
     display: flex;
     align-items: center;
-    gap: 30px;
     width: 100%;
-    max-width: 1400px;
-    padding-left: 100px;
+    height: 100%;
+    padding-left: 52%;
     box-sizing: border-box;
 }
 
-.main-heading {
+.red-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.red-main-heading {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 112px;
+    font-size: 64px;
     line-height: 1;
     color: #FFFFFF;
-    margin: 0;
-    white-space: nowrap;
-    flex: 0 0 auto;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
 }
 
-.tagline {
-    flex: 1;
-}
-
-.sub-heading {
+.red-sub-heading {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 40px;
-    line-height: 1.4;
+    font-size: 32px;
+    line-height: 1.2;
     color: #FFFFFF;
-    margin: 10px 0;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.red-sub-heading.dash {
+    margin-left: 0;
+    text-indent: -15px;
+    padding-left: 15px;
 }
 
 .text-block {
@@ -161,9 +181,9 @@ body {
     font-style: normal;
     font-weight: 300;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.2;
     color: #000000;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* ==================== СТРАНИЦА "AI-КОНСТРУКТОР" ==================== */
@@ -173,9 +193,30 @@ body {
     gap: 50px;
     width: 100%;
     max-width: 1400px;
-    margin: 190px auto 0;
+    margin: 220px auto 0;
     padding: 0 50px;
     box-sizing: border-box;
+}
+
+/* Обновлённый стиль для описания — выравнивание по левому краю */
+.constructor-description {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #273352;
+    margin-bottom: 30px;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.desc-line-1,
+.desc-line-2 {
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    white-space: normal;
 }
 
 .image-container {
@@ -185,15 +226,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 0;
     position: relative;
     overflow: hidden;
+    border: none;
 }
 
 .image-container img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.base-shirt {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: none;
+    outline: none;
 }
 
 .print-area {
@@ -211,6 +264,7 @@ body {
     transition: opacity 0.5s ease;
     z-index: 3;
     pointer-events: none;
+    border: none;
 }
 
 .print-area.show {
@@ -247,6 +301,7 @@ body {
     resize: none;
 }
 
+/* Кнопка "СГЕНЕРИРОВАТЬ" */
 .generate-btn {
     background: #651413;
     color: #ffffff;
@@ -260,11 +315,34 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: auto;
 }
 
-.generate-btn:hover {
+.generate-btn:hover:not(:disabled) {
     background-color: #5b1315;
 }
+
+/* Состояние загрузки: кнопка заблокирована */
+.generate-btn:disabled {
+    background-color: #a05252;
+    color: #ffffff;
+    opacity: 0.8;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Дополнительно: анимация спиннера после текста (необязательно) */
+.generate-btn.btn-loading::after {
+    content: ' ⏳';
+    margin-left: 8px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== СООБЩЕНИЕ ОБ ОШИБКЕ ==================== */
 
 .error-message {
     color: #d32f2f;
@@ -318,16 +396,17 @@ body {
 .products-container {
     width: 100%;
     max-width: 1400px;
-    margin: 190px auto 0;
+    margin: 220px auto 0;
     padding: 0 50px;
     box-sizing: border-box;
 }
 
-.products-row {
-    display: flex;
-    flex-direction: column;
+.products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
     padding: 10px 0;
+    align-items: stretch;
 }
 
 .product-card {
@@ -337,6 +416,9 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .product-card:hover {
@@ -352,6 +434,7 @@ body {
     justify-content: center;
     align-items: center;
     background: #f8f8f8;
+    flex-shrink: 0;
 }
 
 .product-image {
@@ -362,6 +445,9 @@ body {
 
 .product-info {
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .product-title {
@@ -374,14 +460,76 @@ body {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 60px;
+    min-height: 60px;
+}
+
+.product-details {
+    margin-bottom: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-description {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #000000;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Выравнивание спецификаций между карточками */
+.product-specs-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 8px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.spec-label {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    min-width: 70px;
+}
+
+.spec-value {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #000000;
+}
+
+.price-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.price-label {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+    min-width: 70px;
 }
 
 .price {
     font-weight: 600;
     font-size: 24px;
     color: #000;
-    margin: 0 0 20px;
+    margin: 0;
 }
 
 .btn-more {
@@ -397,7 +545,7 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 8px;
-    margin-top: 16px;
+    margin-top: auto;
     transition: background 0.2s;
     text-align: center;
     text-decoration: none;
@@ -405,6 +553,68 @@ body {
 
 .btn-more:hover {
     background: #1a243b;
+}
+
+/* Адаптивность для товаров */
+@media (max-width: 1024px) {
+    .products-grid {
+        gap: 30px;
+    }
+    
+    .product-specs-grid {
+        gap: 10px 6px;
+    }
+    
+    .spec-label, .price-label {
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid {
+        gap: 25px;
+    }
+    
+    .product-image-container {
+        height: 280px;
+    }
+    
+    .product-title {
+        font-size: 18px;
+        min-height: auto;
+    }
+    
+    .product-description {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .spec-label, .spec-value, .price-label {
+        font-size: 14px;
+    }
+    
+    .spec-label, .price-label {
+        min-width: 55px;
+    }
+    
+    .price {
+        font-size: 20px;
+    }
+    
+    .product-specs-grid {
+        gap: 8px 5px;
+    }
+    
+    .btn-more {
+        font-size: 15px;
+    }
 }
 
 /* ==================== АДАПТИВНЫЕ МЕДИА-ЗАПРОСЫ ==================== */
@@ -431,15 +641,16 @@ body {
     }
 
     .red-content-center {
-        padding-left: 60px;
-        gap: 20px;
+        padding-left: 52%;
     }
-    .main-heading {
-        font-size: 96px;
+    
+    .red-main-heading {
+        font-size: 56px;
     }
-    .sub-heading {
-        font-size: 36px;
+    .red-sub-heading {
+        font-size: 28px;
     }
+    
     .text-block {
         width: 90%;
         margin: 30px auto 0;
@@ -451,6 +662,12 @@ body {
     }
     .image-container {
         min-height: 400px;
+        padding: 0;
+    }
+
+    .constructor-description {
+        font-size: 16px;
+        margin-bottom: 25px;
     }
 
     .products-container,
@@ -495,7 +712,7 @@ body {
     .content,
     .constructor-wrapper,
     .products-container {
-        margin-top: 160px;
+        margin-top: 180px;
         padding: 0 20px;
     }
 
@@ -503,24 +720,49 @@ body {
         width: 90%;
         height: auto;
         padding: 30px 0;
-    }
-    .red-content-center {
         flex-direction: column;
-        text-align: center;
+    }
+    
+    .about-image {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        margin-bottom: 20px;
+    }
+    
+    .red-content-center {
         padding-left: 0;
-        gap: 15px;
+        text-align: center;
+        justify-content: center;
     }
-    .main-heading {
-        font-size: 64px;
-        line-height: 1.1;
+    
+    .red-text-content {
+        align-items: center;
+        text-align: center;
+        margin-left: 0;
     }
-    .sub-heading {
-        font-size: 28px;
-        margin: 8px 0;
+    
+    .red-main-heading {
+        font-size: 48px;
     }
+    .red-sub-heading {
+        font-size: 24px;
+        text-align: center;
+    }
+    .red-sub-heading.dash {
+        text-indent: 0;
+        padding-left: 0;
+        margin-left: 0;
+    }
+    
     .text-block {
         width: 90%;
         margin: 20px auto 0;
+    }
+
+    .text-paragraph {
+        line-height: 1.2;
+        margin-bottom: 8px;
     }
 
     .constructor-title,
@@ -528,6 +770,12 @@ body {
         font-size: 48px;
         line-height: 1.2;
         margin-bottom: 30px;
+    }
+
+    .constructor-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 0 10px;
     }
 
     .editable-box {
@@ -545,6 +793,11 @@ body {
     .contact-label,
     .contact-value {
         font-size: 20px;
+    }
+
+    .image-container {
+        min-height: 300px;
+        padding: 0;
     }
 
     .product-image-container {
@@ -591,21 +844,25 @@ body {
     .content,
     .constructor-wrapper,
     .products-container {
-        margin-top: 140px;
+        margin-top: 160px;
         padding: 0 15px;
     }
-
-    .main-heading {
-        font-size: 48px;
-        line-height: 1.1;
+    
+    .red-main-heading {
+        font-size: 36px;
     }
-    .sub-heading {
-        font-size: 24px;
-        margin: 6px 0;
+    .red-sub-heading {
+        font-size: 20px;
     }
+    
     .text-block {
         width: 95%;
         margin: 15px auto 0;
+    }
+
+    .text-paragraph {
+        line-height: 1.2;
+        margin-bottom: 6px;
     }
 
     .constructor-title,
@@ -613,6 +870,11 @@ body {
         font-size: 36px;
         line-height: 1.3;
         margin-bottom: 25px;
+    }
+
+    .constructor-description {
+        font-size: 14px;
+        margin-bottom: 15px;
     }
 
     .editable-box {
@@ -624,11 +886,17 @@ body {
     .generate-btn {
         font-size: 18px;
         padding: 12px;
+        width: 100%;
     }
 
     .contact-label,
     .contact-value {
         font-size: 18px;
+    }
+
+    .image-container {
+        min-height: 250px;
+        padding: 0;
     }
 
     .product-image-container {
@@ -650,7 +918,8 @@ body {
 /* Дополнительная адаптация для вертикальных мобильных экранов */
 @media (max-height: 600px) and (max-width: 768px) {
     .image-container {
-        min-height: 300px;
+        min-height: 250px;
+        padding: 0;
     }
     .product-image-container {
         height: 240px;

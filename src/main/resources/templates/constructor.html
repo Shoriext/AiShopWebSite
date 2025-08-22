@@ -28,9 +28,53 @@
         <div class="constructor-wrapper">
             <!-- Левая часть - изображение -->
             <div class="image-container">
-                <img src="images/ai.jpg" alt="Футболка" class="base-shirt">
+                <!-- Базовая футболка (меняется по клику) -->
+                <img id="base-shirt" src="images/tshirt-white.jpg" alt="Футболка" class="base-shirt">
+
+                <!-- Область для принта (AI-изображение) -->
                 <div id="print-area" class="print-area"></div>
             </div>
+
+
+            <script>
+                function changeShirt(button) {
+                    const newSrc = button.getAttribute('data-shirt');
+
+                    // 1. Меняем изображение футболки
+                    document.getElementById('base-shirt').src = newSrc;
+
+                    // 2. Обновляем активный класс у кнопок
+                    document.querySelectorAll('.color-swatch').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    // 3. Сохраняем выбор в localStorage
+                    localStorage.setItem('selectedShirt', newSrc);
+                    localStorage.setItem('selectedShirtButton', button.getAttribute('data-shirt')); // сохраняем, какая кнопка была нажата
+                }
+
+                // 4. При загрузке страницы восстанавливаем состояние
+                window.addEventListener('load', function () {
+                    const savedSrc = localStorage.getItem('selectedShirt');
+                    const savedButton = localStorage.getItem('selectedShirtButton');
+
+                    if (savedSrc) {
+                        document.getElementById('base-shirt').src = savedSrc;
+                    }
+
+                    if (savedButton) {
+                        // Находим кнопку с таким data-shirt и делаем её активной
+                        document.querySelectorAll('.color-swatch').forEach(btn => {
+                            if (btn.getAttribute('data-shirt') === savedButton) {
+                                btn.classList.add('active');
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            </script>
 
             <!-- Правая часть - конструктор -->
             <div class="constructor-content">
@@ -47,12 +91,67 @@
                     <textarea id="prompt-container" class="editable-box" placeholder="Напишите здесь свой запрос..."></textarea>
                 </form>
 
-                <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
-                <button type="button" class="generate-btn" id="generate-btn" onclick="submitForm()">
-                    СГЕНЕРИРОВАТЬ
-                </button>
+                <div>
+                    <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
+                    <button type="button" class="generate-btn" id="generate-btn" onclick="submitForm()">
+                        СГЕНЕРИРОВАТЬ
+                    </button>
+                    <!-- Кнопка "Купить" (изначально скрыта) -->
+                    <button
+                            type="button"
+                            class="btn-more btn-cart"
+                            id="buy-btn"
+                            onclick="addToCart()"
+                            >
+                        ДОБАВИТЬ В КОРЗИНУ
+                    </button>
+                </div>
+                <script>
+                    function addToCart() {
+                        const printArea = document.getElementById('print-area');
+                        const baseShirt = document.getElementById('base-shirt');
 
+                        if (!printArea.classList.contains('show')) {
+                            alert('Сначала сгенерируйте принт!');
+                            return;
+                        }
+
+                        const printImageUrl = printArea.style.backgroundImage.slice(5, -2);
+                        const shirtColor = baseShirt.src.includes('white') ? 'white' : 'black';
+                        const shirtImageUrl = baseShirt.src;
+
+                        // Формируем URL с параметрами
+                        const url = `/custom-order?` +
+                            `shirtColor=${encodeURIComponent(shirtColor)}&` +
+                            `shirtImageUrl=${encodeURIComponent(shirtImageUrl)}&` +
+                            `printImageUrl=${encodeURIComponent(printImageUrl)}`;
+
+                        window.location.href = url;
+                    }
+                </script>
                 <div id="error-message" class="error-message"></div>
+
+                <!-- Квадратные кнопки выбора цвета -->
+                <div class="constructor-Color">
+                    <p class="desc-line-1">Выбор цвета:</p>
+                    <div class="color-selector">
+
+                        <button
+                                type="button"
+                                class="color-swatch white active"
+                                data-shirt="images/tshirt-white.jpg"
+                                aria-label="Белая футболка"
+                                onclick="changeShirt(this)">
+                        </button>
+                        <button
+                                type="button"
+                                class="color-swatch black"
+                                data-shirt="images/tshirt-black.jpg"
+                                aria-label="Чёрная футболка"
+                                onclick="changeShirt(this)">
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

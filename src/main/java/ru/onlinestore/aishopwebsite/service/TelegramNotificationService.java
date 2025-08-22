@@ -39,6 +39,7 @@ public class TelegramNotificationService {
         sendMessage(message.toString());
     }
 
+
     private String escapeMarkdown(String text) {
         return text.replaceAll("[_\\-*]", "\\\\$0"); // экранируем _, *, -
     }
@@ -60,5 +61,60 @@ public class TelegramNotificationService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Отправляет уведомление в Telegram о заказе кастомной футболки
+     */
+    public void sendCustomTshirtOrder(
+            String customerName,
+            String phone,
+            String shirtColor,
+            String printImageUrl) {
+
+        // Формируем понятное название цвета
+        String readableColor = "Белая";
+        if ("black".equalsIgnoreCase(shirtColor)) {
+            readableColor = "Чёрная";
+        }
+
+
+        // Потом отправляем текстовое сообщение
+        String message = buildCustomOrderMessage(customerName, phone, readableColor, printImageUrl);
+        sendMessage(message);
+    }
+    private String buildCustomOrderMessage(
+            String customerName,
+            String phone,
+            String readableColor,
+            String printImageUrl) {
+
+        StringBuilder message = new StringBuilder();
+        message.append("<b>👕 КАСТОМНАЯ ФУТБОЛКА</b>\n\n");
+        message.append("<b>👤 Имя:</b> ").append(escapeHtml(customerName)).append("\n");
+        message.append("<b>📞 Телефон:</b> <code>").append(escapeHtml(phone)).append("</code>\n\n");
+
+        message.append("<b>🎨 Детали заказа:</b>\n");
+        message.append("• <b>Цвет футболки:</b> ").append(readableColor).append("\n");
+        message.append("• <b>Тип:</b> С ИИ-принтом\n");
+
+        if (printImageUrl != null && !printImageUrl.isEmpty()) {
+            message.append("• <b>Принт:</b> 🖼️ \n").append(printImageUrl);
+        }
+
+        message.append("\n");
+        message.append("<b>ℹ️ Статус:</b> Ожидает подтверждения");
+
+        return message.toString();
+    }
+
+    // Простое экранирование для HTML
+    private String escapeHtml(String text) {
+        return text
+                .replace("&", "&amp;")
+                .replace("<", "<")
+                .replace(">", ">")
+                .replace("\"", "&quot;");
     }
 }

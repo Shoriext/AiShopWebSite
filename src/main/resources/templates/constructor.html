@@ -91,11 +91,44 @@
                     <textarea id="prompt-container" class="editable-box" placeholder="Напишите здесь свой запрос..."></textarea>
                 </form>
 
-                <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
-                <button type="button" class="generate-btn" id="generate-btn" onclick="submitForm()">
-                    СГЕНЕРИРОВАТЬ
-                </button>
+                <div>
+                    <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
+                    <button type="button" class="generate-btn" id="generate-btn" onclick="submitForm()">
+                        СГЕНЕРИРОВАТЬ
+                    </button>
+                    <!-- Кнопка "Купить" (изначально скрыта) -->
+                    <button
+                            type="button"
+                            class="btn-more btn-cart"
+                            id="buy-btn"
+                            onclick="addToCart()"
+                            >
+                        ДОБАВИТЬ В КОРЗИНУ
+                    </button>
+                </div>
+                <script>
+                    function addToCart() {
+                        const printArea = document.getElementById('print-area');
+                        const baseShirt = document.getElementById('base-shirt');
 
+                        if (!printArea.classList.contains('show')) {
+                            alert('Сначала сгенерируйте принт!');
+                            return;
+                        }
+
+                        const printImageUrl = printArea.style.backgroundImage.slice(5, -2);
+                        const shirtColor = baseShirt.src.includes('white') ? 'white' : 'black';
+                        const shirtImageUrl = baseShirt.src;
+
+                        // Формируем URL с параметрами
+                        const url = `/custom-order?` +
+                            `shirtColor=${encodeURIComponent(shirtColor)}&` +
+                            `shirtImageUrl=${encodeURIComponent(shirtImageUrl)}&` +
+                            `printImageUrl=${encodeURIComponent(printImageUrl)}`;
+
+                        window.location.href = url;
+                    }
+                </script>
                 <div id="error-message" class="error-message"></div>
 
                 <!-- Квадратные кнопки выбора цвета -->

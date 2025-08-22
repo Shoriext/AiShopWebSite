@@ -1,7 +1,27 @@
 // Сущность представляющая товар в магазине
 package ru.onlinestore.aishopwebsite.model;
 
+import lombok.Getter;
+
+@Getter
 public class Product {
+
+    public void setPrintImageUrl(String printImageUrl) {
+        this.printImageUrl = printImageUrl;
+    }
+
+    public void setShirtColor(String shirtColor) {
+        this.shirtColor = shirtColor;
+    }
+
+    public void setShirtImageUrl(String shirtImageUrl) {
+        this.shirtImageUrl = shirtImageUrl;
+    }
+
+    private String shirtColor;
+    private String shirtImageUrl;
+    private String printImageUrl;
+    // Геттеры и сеттеры
     private Long id;
     private String name;
     private Double price;
@@ -16,16 +36,18 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    // Геттеры и сеттеры
-    public Long getId() { return id; }
+    public Product(String shirtColor, String shirtImageUrl, String printImageUrl) {
+        this.shirtColor = shirtColor;
+        this.shirtImageUrl = shirtImageUrl;
+        this.printImageUrl = printImageUrl;
+    }
+
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }
 
-    public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
 }

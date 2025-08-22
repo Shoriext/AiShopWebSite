@@ -28,9 +28,53 @@
         <div class="constructor-wrapper">
             <!-- Левая часть - изображение -->
             <div class="image-container">
-                <img src="images/ai.jpg" alt="Футболка" class="base-shirt">
+                <!-- Базовая футболка (меняется по клику) -->
+                <img id="base-shirt" src="images/tshirt-white.jpg" alt="Футболка" class="base-shirt">
+
+                <!-- Область для принта (AI-изображение) -->
                 <div id="print-area" class="print-area"></div>
             </div>
+
+
+            <script>
+                function changeShirt(button) {
+                    const newSrc = button.getAttribute('data-shirt');
+
+                    // 1. Меняем изображение футболки
+                    document.getElementById('base-shirt').src = newSrc;
+
+                    // 2. Обновляем активный класс у кнопок
+                    document.querySelectorAll('.color-swatch').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    // 3. Сохраняем выбор в localStorage
+                    localStorage.setItem('selectedShirt', newSrc);
+                    localStorage.setItem('selectedShirtButton', button.getAttribute('data-shirt')); // сохраняем, какая кнопка была нажата
+                }
+
+                // 4. При загрузке страницы восстанавливаем состояние
+                window.addEventListener('load', function () {
+                    const savedSrc = localStorage.getItem('selectedShirt');
+                    const savedButton = localStorage.getItem('selectedShirtButton');
+
+                    if (savedSrc) {
+                        document.getElementById('base-shirt').src = savedSrc;
+                    }
+
+                    if (savedButton) {
+                        // Находим кнопку с таким data-shirt и делаем её активной
+                        document.querySelectorAll('.color-swatch').forEach(btn => {
+                            if (btn.getAttribute('data-shirt') === savedButton) {
+                                btn.classList.add('active');
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            </script>
 
             <!-- Правая часть - конструктор -->
             <div class="constructor-content">
@@ -53,6 +97,24 @@
                 </button>
 
                 <div id="error-message" class="error-message"></div>
+
+                <!-- Квадратные кнопки выбора цвета -->
+                <div class="color-selector">
+                    <button
+                            type="button"
+                            class="color-swatch white active"
+                            data-shirt="images/tshirt-white.jpg"
+                            aria-label="Белая футболка"
+                            onclick="changeShirt(this)">
+                    </button>
+                    <button
+                            type="button"
+                            class="color-swatch black"
+                            data-shirt="images/tshirt-black.jpg"
+                            aria-label="Чёрная футболка"
+                            onclick="changeShirt(this)">
+                    </button>
+                </div>
             </div>
         </div>
     </main>

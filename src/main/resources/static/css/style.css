@@ -555,6 +555,55 @@ body {
     background: #1a243b;
 }
 
+
+/* g____D-sadas-d-as-d
+/* Контейнер для цветовых квадратов */
+.color-selector {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Цветные квадраты */
+.color-swatch {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0 8px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    position: relative;
+}
+
+/* Обводка активного элемента */
+.color-swatch.active {
+    border-color: #000;
+    transform: scale(1.1);
+}
+
+/* Стили под цвет */
+.color-swatch.white {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.color-swatch.black {
+    background-color: #000000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Для экранов без цвета (опционально) */
+.color-swatch::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.1);
+    pointer-events: none;
+}
+
+
 /* Адаптивность для товаров */
 @media (max-width: 1024px) {
     .products-grid {

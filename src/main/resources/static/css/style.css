@@ -560,7 +560,7 @@ body {
 /* Контейнер для цветовых квадратов */
 .color-selector {
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 /* Цветные квадраты */
@@ -601,6 +601,11 @@ body {
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.1);
     pointer-events: none;
+}
+
+.constructor-Color {
+    font-size: 25px;
+    margin-bottom: 25px;
 }
 
 

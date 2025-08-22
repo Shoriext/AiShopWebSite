@@ -5,8 +5,20 @@
     <title>Корзина</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 100px 20px; background: #f5f5f5; }
-        .container { max-width: 900px; margin: 0 auto; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 100px 20px 0;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            flex: 1;
+        }
         h1 { text-align: center; color: #273352; }
         .cart-item {
             display: flex;
@@ -52,6 +64,62 @@
             border-radius: 8px;
             font-weight: 500;
         }
+        /* Специфичные стили для футера на странице корзины */
+        .footer {
+            background: #273352;
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: auto;
+            flex-shrink: 0;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e0e6ed;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #3a4a6b;
+        }
+
+        .footer-bottom p {
+            color: #a0aec0;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -95,5 +163,7 @@
     <!-- Кнопка "Продолжить покупки" — всегда видна -->
     <a href="/products" class="btn-checkout">Продолжить покупки</a>
 </div>
+    <!-- Подключаем футер -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

@@ -33,4 +33,9 @@ public class PageController {
         model.addAttribute("activePage", "contacts");
         return "contacts"; // contacts.html
     }
+
+    @GetMapping("/privacy")
+    public String showPrivacy() {
+        return "privacy"; // шаблон privacy.html
+    }
 }

@@ -220,7 +220,23 @@ main {
     text-align: left;
     width: 100%;
 }
+.consent-text {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    line-height: 1.4;
+}
 
+.consent-text a {
+    color: #0066cc;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.consent-text a:hover {
+    color: #004080;
+}
 .desc-line-1,
 .desc-line-2 {
     margin: 0 0 8px 0;

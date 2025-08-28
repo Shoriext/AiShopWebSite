@@ -158,10 +158,10 @@
         <a th:if="${!#lists.isEmpty(cart)}" href="/checkout" class="btn-checkout">
             Оформить заказ
         </a>
+        <a href="/products" class="btn-checkout">Продолжить покупки</a>
     </div>
 
-    <!-- Кнопка "Продолжить покупки" — всегда видна -->
-    <a href="/products" class="btn-checkout">Продолжить покупки</a>
+
 </div>
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>

@@ -120,11 +120,47 @@
             color: #a0aec0;
             font-size: 12px;
         }
+
+        /* Стили для уведомлений */
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            border: 1px solid #c8e6c9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message::before {
+            content: "✓";
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Корзина</h1>
+
+    <!-- Сообщение об успехе -->
+    <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
 
     <!-- Если корзина пуста -->
     <div th:if="${#lists.isEmpty(cart)}" class="empty">
@@ -142,11 +178,14 @@
                 <p class="item-price"
                    th:text="${#numbers.formatDecimal(item.product.price, 2, 2, 'COMMA')} + ' ₽'">
                 </p>
+                <p th:if="${item.product.size != null and item.product.size != ''}" 
+                   th:text="'Размер: ' + ${item.product.size}">
+                </p>
                 <p class="item-total"
                    th:text="'Итого: ' + ${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽ (' + ${item.quantity} + ' шт.)'">
                 </p>
             </div>
-            <a th:href="@{/cart/remove(productId=${item.product.id})}" class="btn-remove">Удалить</a>
+            <a th:href="@{/cart/remove(productId=${item.product.id}, size=${item.product.size})}" class="btn-remove">Удалить</a>
         </div>
 
         <!-- Общая сумма -->
@@ -165,5 +204,22 @@
 </div>
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script>
+        // Автоматическое скрытие уведомления через 4 секунды
+        document.addEventListener('DOMContentLoaded', function() {
+            const successMessage = document.querySelector('.success-message');
+            
+            if (successMessage) {
+                setTimeout(() => {
+                    successMessage.style.opacity = '0';
+                    successMessage.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 300);
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -86,7 +86,13 @@
     <!-- Список товаров -->
     <div th:each="item : ${cart}">
         <div class="cart-item">
-            <div class="item-info" th:text="${item.product.name}"></div>
+            <div class="item-info">
+                <div th:text="${item.product.name}"></div>
+                <div th:if="${item.product.size != null and item.product.size != ''}" 
+                     th:text="'Размер: ' + ${item.product.size}" 
+                     style="font-size: 14px; color: #666; margin-top: 4px;">
+                </div>
+            </div>
             <div class="item-total"
                  th:text="${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽'">
             </div>

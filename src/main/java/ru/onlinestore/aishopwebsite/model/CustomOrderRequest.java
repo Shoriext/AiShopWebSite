@@ -1,9 +1,6 @@
 package ru.onlinestore.aishopwebsite.model;
 
-import lombok.Getter;
-
 // Внутри контроллера или отдельно
-@Getter
 public class CustomOrderRequest {
     private String shirtColor;
     private String shirtImageUrl;
@@ -21,4 +18,15 @@ public class CustomOrderRequest {
     public void setName(String name) { this.name = name; }
 
     public void setPhone(String phone) { this.phone = phone; }
+
+    // Геттеры
+    public String getShirtColor() { return shirtColor; }
+
+    public String getShirtImageUrl() { return shirtImageUrl; }
+
+    public String getPrintImageUrl() { return printImageUrl; }
+
+    public String getName() { return name; }
+
+    public String getPhone() { return phone; }
 }

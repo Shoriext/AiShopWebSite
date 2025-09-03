@@ -11,6 +11,7 @@
     <header class="header">
         <div class="logo">
             <img src="images/logo.svg" alt="Ai Wear Logo">
+            <img src="images/fsi.png" alt="FSI Logo" style="height: 80px; margin-left: 15px;">
         </div>
         <nav class="main-nav">
             <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
@@ -20,9 +21,7 @@
             <a href="/cart" class="nav-link">🛒 Корзина (<span th:text="${#lists.size(cart)}">0</span>)</a>
         </nav>
     </header>
-
     <div class="blue-stripe"></div>
-
     <div class="content">
         <h1 class="contacts-title">КОНТАКТЫ</h1>
         <div class="contact-info">

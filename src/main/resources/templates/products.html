@@ -15,7 +15,6 @@
             padding: 10px 0;
             align-items: stretch;
         }
-        
         .product-card {
             background: #fff;
             border-radius: 14px;
@@ -27,7 +26,6 @@
             flex-direction: column;
             height: 100%;
         }
-        
         .product-image-container {
             width: 100%;
             height: 320px;
@@ -38,14 +36,12 @@
             background: #f8f8f8;
             flex-shrink: 0;
         }
-        
         .product-info {
             padding: 24px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
-        
         .product-title {
             font-weight: 500;
             font-size: 22px;
@@ -58,14 +54,12 @@
             overflow: hidden;
             min-height: 60px;
         }
-        
         .product-details {
             margin-bottom: 20px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
-        
         .product-description {
             font-family: 'Montserrat';
             font-style: normal;
@@ -76,7 +70,6 @@
             margin-bottom: 20px;
             flex-grow: 1;
         }
-        
         /* Выравнивание спецификаций между карточками */
         .product-specs-grid {
             display: grid;
@@ -85,7 +78,6 @@
             align-items: center;
             margin-bottom: 20px;
         }
-        
         .spec-label {
             font-family: 'Montserrat';
             font-style: normal;
@@ -94,7 +86,6 @@
             color: #000000;
             min-width: 70px;
         }
-        
         .spec-value {
             font-family: 'Montserrat';
             font-style: normal;
@@ -102,7 +93,6 @@
             font-size: 16px;
             color: #000000;
         }
-        
         .price-row {
             grid-column: 1 / -1;
             display: flex;
@@ -111,7 +101,6 @@
             padding-top: 8px;
             border-top: 1px solid #eee;
         }
-        
         .price-label {
             font-family: 'Montserrat';
             font-style: normal;
@@ -120,14 +109,12 @@
             color: #000000;
             min-width: 70px;
         }
-        
         .price {
             font-weight: 600;
             font-size: 24px;
             color: #000;
             margin: 0;
         }
-        
         .btn-more {
             display: block;
             width: 100%;
@@ -146,19 +133,16 @@
             text-align: center;
             text-decoration: none;
         }
-
         /* Стили для выбора размера */
         .size-selection {
             margin-bottom: 20px;
         }
-
         .size-buttons {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
             margin-top: 8px;
         }
-
         .size-btn {
             padding: 8px 16px;
             border: 2px solid #273352;
@@ -171,17 +155,14 @@
             border-radius: 6px;
             transition: all 0.2s;
         }
-
         .size-btn:hover {
             background: #273352;
             color: #fff;
         }
-
         .size-btn.selected {
             background: #273352;
             color: #fff;
         }
-
         .error-message {
             background: #ffebee;
             color: #c62828;
@@ -192,7 +173,6 @@
             font-size: 14px;
             border: 1px solid #ffcdd2;
         }
-
         .success-message {
             background: #e8f5e8;
             color: #2e7d32;
@@ -206,13 +186,11 @@
             align-items: center;
             gap: 8px;
         }
-
         .success-message::before {
             content: "✓";
             font-weight: bold;
             font-size: 16px;
         }
-
         /* Анимация появления уведомления */
         @keyframes slideIn {
             from {
@@ -224,68 +202,54 @@
                 transform: translateY(0);
             }
         }
-
         .success-message, .error-message {
             animation: slideIn 0.3s ease-out;
         }
-        
         /* Адаптивность */
         @media (max-width: 1024px) {
             .products-grid {
                 gap: 30px;
             }
-            
             .product-specs-grid {
                 gap: 10px 6px;
             }
-            
             .spec-label, .price-label {
                 min-width: 60px;
             }
         }
-        
         @media (max-width: 768px) {
             .products-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
         }
-        
         @media (max-width: 480px) {
             .products-grid {
                 gap: 25px;
             }
-            
             .product-image-container {
                 height: 280px;
             }
-            
             .product-title {
                 font-size: 18px;
                 min-height: auto;
             }
-            
             .product-description {
                 font-size: 14px;
                 margin-bottom: 15px;
             }
-            
             .spec-label, .spec-value, .price-label {
                 font-size: 14px;
             }
-            
             .spec-label, .price-label {
                 min-width: 55px;
             }
-            
             .price {
                 font-size: 20px;
             }
-            
             .product-specs-grid {
                 gap: 8px 5px;
             }
-            
             .btn-more {
                 font-size: 15px;
             }
@@ -296,6 +260,7 @@
     <header class="header">
         <div class="logo">
             <img src="images/logo.svg" alt="Ai Wear Logo">
+            <img src="images/fsi.png" alt="FSI Logo" style="height: 80px; margin-left: 15px;">
         </div>
         <nav class="main-nav">
             <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
@@ -305,17 +270,13 @@
             <a href="/cart" class="nav-link">🛒 Корзина (<span th:text="${#lists.size(cart)}">0</span>)</a>
         </nav>
     </header>
-
     <div class="blue-stripe"></div>
-
     <main>
         <div class="products-container">
             <!-- Сообщение об ошибке -->
             <div th:if="${error}" class="error-message" th:text="${error}"></div>
-            
             <!-- Сообщение об успехе -->
             <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
-            
             <div class="products-grid">
                 <!-- Футболка -->
                 <div class="product-card">
@@ -324,30 +285,24 @@
                     </div>
                     <div class="product-info">
                         <h2 class="product-title">Футболка «Алфавит Студента»</h2>
-                        
                         <div class="product-details">
                             <p class="product-description">
                                 Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань премиального качества обеспечивает комфорт в течение всего дня, а стильный крой подходит для любого телосложения.
                             </p>
-                            
                             <div class="product-specs-grid">
                                 <span class="spec-label">Цвет:</span>
                                 <span class="spec-value">черный</span>
-                                
                                 <span class="spec-label">Размеры:</span>
                                 <span class="spec-value">S, M, L, XL</span>
-                                
                                 <div class="price-row">
                                     <span class="price-label">Цена:</span>
                                     <span class="price" th:text="${#numbers.formatDecimal(products[0].price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</span>
                                 </div>
                             </div>
                         </div>
-                        
                         <form th:action="@{/cart/add}" method="post" id="tshirt-form">
                             <input type="hidden" name="productId" th:value="${products[0].id}">
                             <input type="hidden" name="size" id="selected-size">
-                            
                             <div class="size-selection">
                                 <span class="spec-label">Выберите размер:</span>
                                 <div class="size-buttons">
@@ -357,12 +312,10 @@
                                     <button type="button" class="size-btn" data-size="XL">XL</button>
                                 </div>
                             </div>
-                            
                             <button type="submit" class="btn-more btn-cart" id="tshirt-submit">КУПИТЬ</button>
                         </form>
                     </div>
                 </div>
-                
                 <!-- Шоппер -->
                 <div class="product-card">
                     <div class="product-image-container">
@@ -370,26 +323,21 @@
                     </div>
                     <div class="product-info">
                         <h2 class="product-title">Шоппер «Алфавит Студента»</h2>
-                        
                         <div class="product-details">
                             <p class="product-description">
                                 Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном — must-have для современного студента. Прочная ткань с плотными швами выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.
                             </p>
-                            
                             <div class="product-specs-grid">
                                 <span class="spec-label">Цвет:</span>
                                 <span class="spec-value">черный</span>
-                                
                                 <span class="spec-label">Размеры:</span>
                                 <span class="spec-value">единый размер</span>
-                                
                                 <div class="price-row">
                                     <span class="price-label">Цена:</span>
                                     <span class="price" th:text="${#numbers.formatDecimal(products[1].price, 2, 2, 'COMMA')} + ' руб.'">1 290,00 руб.</span>
                                 </div>
                             </div>
                         </div>
-                        
                         <form th:action="@{/cart/add}" method="post">
                             <input type="hidden" name="productId" th:value="${products[1].id}">
                             <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
@@ -401,28 +349,23 @@
     </main>
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>
-    
     <script>
         // Обработка выбора размера для футболки
         document.addEventListener('DOMContentLoaded', function() {
             const sizeButtons = document.querySelectorAll('.size-btn');
             const selectedSizeInput = document.getElementById('selected-size');
             const tshirtForm = document.getElementById('tshirt-form');
-            
             // Обработчик клика по кнопкам размера
             sizeButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     // Убираем выделение со всех кнопок
                     sizeButtons.forEach(btn => btn.classList.remove('selected'));
-                    
                     // Выделяем выбранную кнопку
                     this.classList.add('selected');
-                    
                     // Устанавливаем значение в скрытое поле
                     selectedSizeInput.value = this.getAttribute('data-size');
                 });
             });
-            
             // Валидация формы перед отправкой
             tshirtForm.addEventListener('submit', function(e) {
                 if (!selectedSizeInput.value) {
@@ -431,11 +374,9 @@
                     return false;
                 }
             });
-
             // Автоматическое скрытие уведомлений через 4 секунды
             const successMessage = document.querySelector('.success-message');
             const errorMessage = document.querySelector('.error-message');
-            
             if (successMessage) {
                 setTimeout(() => {
                     successMessage.style.opacity = '0';
@@ -445,7 +386,6 @@
                     }, 300);
                 }, 4000);
             }
-            
             if (errorMessage) {
                 setTimeout(() => {
                     errorMessage.style.opacity = '0';

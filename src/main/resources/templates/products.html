@@ -146,6 +146,88 @@
             text-align: center;
             text-decoration: none;
         }
+
+        /* Стили для выбора размера */
+        .size-selection {
+            margin-bottom: 20px;
+        }
+
+        .size-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .size-btn {
+            padding: 8px 16px;
+            border: 2px solid #273352;
+            background: transparent;
+            color: #273352;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .size-btn:hover {
+            background: #273352;
+            color: #fff;
+        }
+
+        .size-btn.selected {
+            background: #273352;
+            color: #fff;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            border: 1px solid #ffcdd2;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            border: 1px solid #c8e6c9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-message::before {
+            content: "✓";
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Анимация появления уведомления */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message, .error-message {
+            animation: slideIn 0.3s ease-out;
+        }
         
         /* Адаптивность */
         @media (max-width: 1024px) {
@@ -228,6 +310,12 @@
 
     <main>
         <div class="products-container">
+            <!-- Сообщение об ошибке -->
+            <div th:if="${error}" class="error-message" th:text="${error}"></div>
+            
+            <!-- Сообщение об успехе -->
+            <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+            
             <div class="products-grid">
                 <!-- Футболка -->
                 <div class="product-card">
@@ -256,9 +344,21 @@
                             </div>
                         </div>
                         
-                        <form th:action="@{/cart/add}" method="post">
+                        <form th:action="@{/cart/add}" method="post" id="tshirt-form">
                             <input type="hidden" name="productId" th:value="${products[0].id}">
-                            <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
+                            <input type="hidden" name="size" id="selected-size">
+                            
+                            <div class="size-selection">
+                                <span class="spec-label">Выберите размер:</span>
+                                <div class="size-buttons">
+                                    <button type="button" class="size-btn" data-size="S">S</button>
+                                    <button type="button" class="size-btn" data-size="M">M</button>
+                                    <button type="button" class="size-btn" data-size="L">L</button>
+                                    <button type="button" class="size-btn" data-size="XL">XL</button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-more btn-cart" id="tshirt-submit">КУПИТЬ</button>
                         </form>
                     </div>
                 </div>
@@ -301,5 +401,61 @@
     </main>
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script>
+        // Обработка выбора размера для футболки
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeButtons = document.querySelectorAll('.size-btn');
+            const selectedSizeInput = document.getElementById('selected-size');
+            const tshirtForm = document.getElementById('tshirt-form');
+            
+            // Обработчик клика по кнопкам размера
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем выделение со всех кнопок
+                    sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                    
+                    // Выделяем выбранную кнопку
+                    this.classList.add('selected');
+                    
+                    // Устанавливаем значение в скрытое поле
+                    selectedSizeInput.value = this.getAttribute('data-size');
+                });
+            });
+            
+            // Валидация формы перед отправкой
+            tshirtForm.addEventListener('submit', function(e) {
+                if (!selectedSizeInput.value) {
+                    e.preventDefault();
+                    alert('Пожалуйста, выберите размер футболки');
+                    return false;
+                }
+            });
+
+            // Автоматическое скрытие уведомлений через 4 секунды
+            const successMessage = document.querySelector('.success-message');
+            const errorMessage = document.querySelector('.error-message');
+            
+            if (successMessage) {
+                setTimeout(() => {
+                    successMessage.style.opacity = '0';
+                    successMessage.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 300);
+                }, 4000);
+            }
+            
+            if (errorMessage) {
+                setTimeout(() => {
+                    errorMessage.style.opacity = '0';
+                    errorMessage.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 300);
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 </html>

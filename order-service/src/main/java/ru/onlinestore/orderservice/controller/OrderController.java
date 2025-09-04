@@ -14,9 +14,15 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    public record CreateOrderRequest(
+            String sessionId
+    ) {}
+
     @PostMapping("/create")
-    public Order createOrder(@RequestParam String sessionId) {
-        return orderService.createOrder(sessionId);
+    public Order createOrder(@RequestBody CreateOrderRequest request) {
+        return orderService.createOrder(
+                request.sessionId()
+        );
     }
 
     @GetMapping("/my")

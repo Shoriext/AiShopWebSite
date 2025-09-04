@@ -56,4 +56,12 @@ public class CartClient {
                 .bodyToMono(CartDto.class)
                 .block();
     }
+
+    public void clearCart(String sessionId) {
+        webClient.delete()
+                .uri("http://cart-service:8082/api/cart/{sessionId}/clear", sessionId)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+    }
 }

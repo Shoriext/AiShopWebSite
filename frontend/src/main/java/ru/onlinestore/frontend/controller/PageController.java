@@ -119,4 +119,51 @@ public class PageController {
         model.addAttribute("activePage", "cart");
         return "cart";
     }
+
+    @GetMapping("/checkout")
+    public String showCheckout(Model model, HttpSession session) {
+        String sessionId = session.getId();
+
+        try {
+            // Получаем корзину
+            CartClient.CartDto cart = cartClient.getCart(sessionId).block();
+            model.addAttribute("cart", cart);
+
+            // Подтягиваем товары
+            List<CartItemDetail> cartItems = new ArrayList<>();
+            double total = 0.0;
+
+            for (Map.Entry<String, Integer> entry : cart.getItems().entrySet()) {
+                String key = entry.getKey();
+                Integer quantity = entry.getValue();
+
+                String productIdStr = key.contains(":") ? key.split(":")[0] : key;
+                String size = key.contains(":") ? key.split(":")[1] : null;
+
+                try {
+                    Long productId = Long.valueOf(productIdStr);
+                    ProductClient.ProductDto product = productClient.getProductById(productId);
+                    double itemTotal = product.getPrice() * quantity;
+
+                    cartItems.add(new CartItemDetail(product, size, quantity));
+                    total += itemTotal;
+                } catch (Exception e) {
+                    System.err.println("Товар не найден: " + productIdStr);
+                }
+            }
+
+            model.addAttribute("cartItems", cartItems);
+            model.addAttribute("total", total);
+            model.addAttribute("sessionId", sessionId);
+
+        } catch (Exception e) {
+            model.addAttribute("cartItems", Collections.emptyList());
+            model.addAttribute("total", 0.0);
+            model.addAttribute("sessionId", sessionId);
+            e.printStackTrace();
+        }
+
+        model.addAttribute("activePage", "checkout");
+        return "checkout";
+    }
 }

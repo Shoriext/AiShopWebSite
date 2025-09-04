@@ -27,6 +27,10 @@ public class ProductClient {
         public String getName() {
             return name;
         }
+
+        public Double getPrice() {
+            return price;
+        }
     }
 
     public List<ProductDto> getAllProducts() {

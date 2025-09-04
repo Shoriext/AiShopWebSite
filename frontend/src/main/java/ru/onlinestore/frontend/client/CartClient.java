@@ -5,7 +5,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
-import java.nio.channels.MembershipKey;
 import java.time.Duration;
 import java.util.Map;
 
@@ -26,6 +25,10 @@ public class CartClient {
             Map<String, Integer> items,
             int totalItems
     ) {
+        public Map<String, Integer> getItems(
+        ) {
+            return items;
+        }
     }
 
     public Mono<CartDto> getCart(String sessionId) {

@@ -163,29 +163,30 @@
     <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
 
     <!-- Если корзина пуста -->
-    <div th:if="${#lists.isEmpty(cart)}" class="empty">
+    <div th:if="${#lists.isEmpty(cartItems)}" class="empty">
         <p>Ваша корзина пуста</p>
         <a href="/products" class="btn-checkout">Вернуться к товарам</a>
     </div>
 
     <!-- Если корзина НЕ пуста -->
-    <div th:if="${!#lists.isEmpty(cart)}">
+    <div th:if="${!#lists.isEmpty(cartItems)}">
         <!-- Список товаров -->
-        <div class="cart-item" th:each="item : ${cart}">
-            <img th:src="${item.product.imageUrl}" class="item-image" alt="" />
+        <div class="cart-item" th:each="item : ${cartItems}">
+            <img th:src="${item.product.imageUrl}" class="item-image" th:alt="${item.product.name}" />
             <div class="item-info">
                 <h3 th:text="${item.product.name}"></h3>
                 <p class="item-price"
                    th:text="${#numbers.formatDecimal(item.product.price, 2, 2, 'COMMA')} + ' ₽'">
                 </p>
-                <p th:if="${item.product.size != null and item.product.size != ''}" 
-                   th:text="'Размер: ' + ${item.product.size}">
+                <p th:if="${item.size != null}"
+                   th:text="'Размер: ' + ${item.size}">
                 </p>
                 <p class="item-total"
                    th:text="'Итого: ' + ${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽ (' + ${item.quantity} + ' шт.)'">
                 </p>
             </div>
-            <a th:href="@{/cart/remove(productId=${item.product.id}, size=${item.product.size})}" class="btn-remove">Удалить</a>
+            <!-- TODO: Реализовать удаление -->
+            <button class="btn-remove">Удалить</button>
         </div>
 
         <!-- Общая сумма -->
@@ -193,33 +194,32 @@
              th:text="'Общая сумма: ' + ${#numbers.formatDecimal(total, 2, 2, 'COMMA')} + ' ₽'">
         </div>
 
-        <!-- КНОПКА ОФОРМИТЬ ЗАКАЗ — ТОЛЬКО ЕСЛИ ТОВАРЫ ЕСТЬ -->
-        <a th:if="${!#lists.isEmpty(cart)}" href="/checkout" class="btn-checkout">
+        <!-- КНОПКА ОФОРМИТЬ ЗАКАЗ -->
+        <a th:if="${!#lists.isEmpty(cartItems)}" href="/checkout" class="btn-checkout">
             Оформить заказ
         </a>
         <a href="/products" class="btn-checkout">Продолжить покупки</a>
     </div>
-
-
 </div>
-    <!-- Подключаем футер -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    
-    <script>
-        // Автоматическое скрытие уведомления через 4 секунды
-        document.addEventListener('DOMContentLoaded', function() {
-            const successMessage = document.querySelector('.success-message');
-            
-            if (successMessage) {
+
+<!-- Подключаем футер -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+    // Автоматическое скрытие уведомления через 4 секунды
+    document.addEventListener('DOMContentLoaded', function() {
+        const successMessage = document.querySelector('.success-message');
+
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.style.opacity = '0';
+                successMessage.style.transform = 'translateY(-20px)';
                 setTimeout(() => {
-                    successMessage.style.opacity = '0';
-                    successMessage.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        successMessage.remove();
-                    }, 300);
-                }, 4000);
-            }
-        });
-    </script>
+                    successMessage.remove();
+                }, 300);
+            }, 4000);
+        }
+    });
+</script>
 </body>
 </html>

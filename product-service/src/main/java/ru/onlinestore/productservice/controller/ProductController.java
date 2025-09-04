@@ -1,10 +1,9 @@
 package ru.onlinestore.productservice.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import ru.onlinestore.productservice.model.Product;
 import ru.onlinestore.productservice.service.ProductService;
 
@@ -25,5 +24,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getById(@PathVariable Long id) {
         return productService.getProductById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product createProduct(@Valid @RequestBody Product product) {
+        return productService.createProduct(product);
     }
 }

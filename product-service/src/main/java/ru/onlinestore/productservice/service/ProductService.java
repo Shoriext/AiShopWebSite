@@ -21,4 +21,17 @@ public class ProductService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
+
+    public Product createProduct(Product product) {
+        // Можно добавить валидацию
+        if (product.getName() == null || product.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Product name is required");
+        }
+        if (product.getPrice() == null || product.getPrice() < 0) {
+            throw new IllegalArgumentException("Price must be >= 0");
+        }
+
+        // ID будет сгенерирован автоматически
+        return productRepository.save(product);
+    }
 }

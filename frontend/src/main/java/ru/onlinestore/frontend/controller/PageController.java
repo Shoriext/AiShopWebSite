@@ -31,4 +31,15 @@ public class PageController {
         return pageService.fetchCartAndRender(model, sessionId, "contacts", "contacts");
     }
 
+    @GetMapping("/products")
+    public String products(Model model, HttpSession session) {
+        String sessionId = session.getId();
+        return pageService.fetchCartAndRender(model, sessionId, "products", "products");
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model, HttpSession session) {
+        String sessionId = session.getId();
+        return pageService.fetchCartAndRender(model, sessionId, "cart", "cart");
+    }
 }

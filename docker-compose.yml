@@ -19,6 +19,20 @@ services:
     depends_on:
       - redis
 
+  product-service:
+    build: ./product-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - cart-service
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - cart-service
+
   frontend:
     build:
       context: ./frontend

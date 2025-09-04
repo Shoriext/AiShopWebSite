@@ -20,14 +20,11 @@ public class PageService {
     // Вспомогательный метод: получить корзину и отрендерить страницу
     public String fetchCartAndRender(Model model, String sessionId, String viewName, String activePage) {
         try {
-            CartClient.CartDto cart = cartClient.getCart(sessionId)
-                    .timeout(Duration.ofSeconds(3))
-                    .block(); // синхронный вызов (для Thymeleaf)
-
+            // Блокируем, чтобы получить значение (для Thymeleaf)
+            CartClient.CartDto cart = cartClient.getCart(sessionId).block();
             model.addAttribute("cart", cart);
         } catch (Exception e) {
             System.err.println("Failed to fetch cart: " + e.getMessage());
-            // Отдать пустую корзину или заглушку
             model.addAttribute("cart", new CartClient.CartDto(sessionId, Map.of(), 0));
         }
 

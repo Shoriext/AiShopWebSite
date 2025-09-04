@@ -278,32 +278,41 @@
             <!-- Сообщение об успехе -->
             <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
             <div class="products-grid">
-                <!-- Футболка -->
-                <div class="product-card">
+                <!-- Динамический вывод всех товаров -->
+                <div th:each="product : ${products}" class="product-card">
                     <div class="product-image-container">
-                        <img th:src="${products[0].imageUrl}" th:alt="${products[0].name}" class="product-image">
+                        <img th:src="${product.imageUrl}" th:alt="${product.name}" class="product-image">
                     </div>
                     <div class="product-info">
-                        <h2 class="product-title">Футболка «Алфавит Студента»</h2>
+                        <h2 class="product-title" th:text="${product.name}">Название товара</h2>
                         <div class="product-details">
-                            <p class="product-description">
-                                Яркая хлопковая футболка с индивидуальной надписью. Мягкая ткань премиального качества обеспечивает комфорт в течение всего дня, а стильный крой подходит для любого телосложения.
-                            </p>
+                            <p class="product-description" th:text="${product.description}">Описание товара</p>
                             <div class="product-specs-grid">
                                 <span class="spec-label">Цвет:</span>
                                 <span class="spec-value">черный</span>
-                                <span class="spec-label">Размеры:</span>
-                                <span class="spec-value">S, M, L, XL</span>
+
+                                <!-- Размеры только для футболки -->
+                                <span th:if="${product.name == 'Футболка «Алфавит Студента»'}">
+                        <span class="spec-label">Размеры:</span>
+                        <span class="spec-value">S, M, L, XL</span>
+                    </span>
+                                <span th:unless="${product.name == 'Футболка «Алфавит Студента»'}">
+                        <span class="spec-label">Размеры:</span>
+                        <span class="spec-value">единый размер</span>
+                    </span>
+
                                 <div class="price-row">
                                     <span class="price-label">Цена:</span>
-                                    <span class="price" th:text="${#numbers.formatDecimal(products[0].price, 2, 2, 'COMMA')} + ' руб.'">1 990,00 руб.</span>
+                                    <span class="price" th:text="${#numbers.formatDecimal(product.price, 2, 2, 'COMMA')} + ' руб.'">0,00 руб.</span>
                                 </div>
                             </div>
                         </div>
-                        <form th:action="@{/cart/add}" method="post" id="tshirt-form">
-                            <input type="hidden" name="productId" th:value="${products[0].id}">
-                            <input type="hidden" name="size" id="selected-size">
-                            <div class="size-selection">
+
+                        <!-- Форма добавления в корзину -->
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <!-- Блок с размерами (только если нужен) -->
+                            <div th:if="${product.name == 'Футболка «Алфавит Студента»'}" class="size-selection">
                                 <span class="spec-label">Выберите размер:</span>
                                 <div class="size-buttons">
                                     <button type="button" class="size-btn" data-size="S">S</button>
@@ -311,35 +320,10 @@
                                     <button type="button" class="size-btn" data-size="L">L</button>
                                     <button type="button" class="size-btn" data-size="XL">XL</button>
                                 </div>
+                                <!-- Скрытое поле для размера -->
+                                <input type="hidden" name="size">
                             </div>
-                            <button type="submit" class="btn-more btn-cart" id="tshirt-submit">КУПИТЬ</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- Шоппер -->
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img th:src="${products[1].imageUrl}" th:alt="${products[1].name}" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-title">Шоппер «Алфавит Студента»</h2>
-                        <div class="product-details">
-                            <p class="product-description">
-                                Стильная и практичная хлопковая сумка-шоппер с индивидуальным дизайном — must-have для современного студента. Прочная ткань с плотными швами выдерживает даже самые тяжелые учебники, а удобные ручки не врезаются в плечи.
-                            </p>
-                            <div class="product-specs-grid">
-                                <span class="spec-label">Цвет:</span>
-                                <span class="spec-value">черный</span>
-                                <span class="spec-label">Размеры:</span>
-                                <span class="spec-value">единый размер</span>
-                                <div class="price-row">
-                                    <span class="price-label">Цена:</span>
-                                    <span class="price" th:text="${#numbers.formatDecimal(products[1].price, 2, 2, 'COMMA')} + ' руб.'">1 290,00 руб.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <form th:action="@{/cart/add}" method="post">
-                            <input type="hidden" name="productId" th:value="${products[1].id}">
+
                             <button type="submit" class="btn-more btn-cart">КУПИТЬ</button>
                         </form>
                     </div>
@@ -350,50 +334,66 @@
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>
     <script>
-        // Обработка выбора размера для футболки
-        document.addEventListener('DOMContentLoaded', function() {
-            const sizeButtons = document.querySelectorAll('.size-btn');
-            const selectedSizeInput = document.getElementById('selected-size');
-            const tshirtForm = document.getElementById('tshirt-form');
-            // Обработчик клика по кнопкам размера
-            sizeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Убираем выделение со всех кнопок
-                    sizeButtons.forEach(btn => btn.classList.remove('selected'));
-                    // Выделяем выбранную кнопку
-                    this.classList.add('selected');
-                    // Устанавливаем значение в скрытое поле
-                    selectedSizeInput.value = this.getAttribute('data-size');
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Обработка выбора размера для всех товаров
+            const sizeButtonContainers = document.querySelectorAll('.size-buttons');
+
+            sizeButtonContainers.forEach(container => {
+                const sizeButtons = container.querySelectorAll('.size-btn');
+                const hiddenInput = container.closest('.product-info').querySelector('input[name="size"]');
+
+                sizeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Снимаем выделение
+                        sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                        // Устанавливаем на выбранную
+                        this.classList.add('selected');
+                        // Сохраняем размер в hidden input
+                        if (hiddenInput) {
+                            hiddenInput.value = this.getAttribute('data-size');
+                        }
+                    });
                 });
             });
-            // Валидация формы перед отправкой
-            tshirtForm.addEventListener('submit', function(e) {
-                if (!selectedSizeInput.value) {
-                    e.preventDefault();
-                    alert('Пожалуйста, выберите размер футболки');
-                    return false;
-                }
+
+            // 2. Валидация форм при отправке (если есть размер)
+            const productForms = document.querySelectorAll('form[action="/cart/add"]');
+
+            productForms.forEach(form => {
+                const sizeInput = form.querySelector('input[name="size"]');
+
+                form.addEventListener('submit', function (e) {
+                    // Проверяем, нужен ли размер (например, только для футболки)
+                    if (sizeInput && !sizeInput.value) {
+                        e.preventDefault();
+                        alert('Пожалуйста, выберите размер');
+                        return false;
+                    }
+                });
             });
-            // Автоматическое скрытие уведомлений через 4 секунды
+
+            // 3. Автоматическое скрытие уведомлений
             const successMessage = document.querySelector('.success-message');
             const errorMessage = document.querySelector('.error-message');
-            if (successMessage) {
-                setTimeout(() => {
-                    successMessage.style.opacity = '0';
-                    successMessage.style.transform = 'translateY(-20px)';
+
+            const fadeOutAndRemove = (element) => {
+                if (element) {
+                    element.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(-20px)';
                     setTimeout(() => {
-                        successMessage.remove();
+                        if (element.parentNode) {
+                            element.remove();
+                        }
                     }, 300);
-                }, 4000);
+                }
+            };
+
+            if (successMessage) {
+                setTimeout(() => fadeOutAndRemove(successMessage), 4000);
             }
             if (errorMessage) {
-                setTimeout(() => {
-                    errorMessage.style.opacity = '0';
-                    errorMessage.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        errorMessage.remove();
-                    }, 300);
-                }, 4000);
+                setTimeout(() => fadeOutAndRemove(errorMessage), 4000);
             }
         });
     </script>

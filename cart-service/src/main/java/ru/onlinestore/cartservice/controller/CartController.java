@@ -24,8 +24,11 @@ public class CartController {
     public Cart addItem(
             @PathVariable String sessionId,
             @RequestParam String productId,
-            @RequestParam int quantity) {
-        return cartService.addItem(sessionId, productId, quantity);
+            @RequestParam(defaultValue = "1") int quantity,
+            @RequestParam(required = false) String size) {
+
+        String key = size != null ? productId + ":" + size : productId;
+        return cartService.addItem(sessionId, key, quantity);
     }
 
     // PUT /api/cart/{sessionId}/update?productId=prod1&quantity=3
@@ -50,4 +53,6 @@ public class CartController {
     public void clearCart(@PathVariable String sessionId) {
         cartService.clearCart(sessionId);
     }
+
+
 }

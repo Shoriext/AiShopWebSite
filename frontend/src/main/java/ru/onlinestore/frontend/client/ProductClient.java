@@ -23,7 +23,11 @@ public class ProductClient {
             String description,
             Double price,
             String imageUrl
-    ) {}
+    ) {
+        public String getName() {
+            return name;
+        }
+    }
 
     public List<ProductDto> getAllProducts() {
         return webClient.get()

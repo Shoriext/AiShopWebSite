@@ -2,6 +2,7 @@ package ru.onlinestore.frontend.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.nio.channels.MembershipKey;
@@ -34,5 +35,22 @@ public class CartClient {
                 .bodyToMono(CartDto.class)
                 .timeout(Duration.ofSeconds(3)) // ✅ Теперь работает
                 .onErrorReturn(new CartDto(sessionId, Map.of(), 0)); // заглушка при ошибке
+    }
+
+    public CartDto addItem(String sessionId, String productId, int quantity, String size) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromUriString("http://cart-service:8082/api/cart/{sessionId}/add")
+                .queryParam("productId", productId)
+                .queryParam("quantity", quantity);
+
+        if (size != null && !size.isEmpty()) {
+            builder.queryParam("size", size);
+        }
+
+        return webClient.post()
+                .uri(builder.buildAndExpand(sessionId).toUri())
+                .retrieve()
+                .bodyToMono(CartDto.class)
+                .block();
     }
 }

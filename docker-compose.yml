@@ -1,97 +1,35 @@
 version: '3.8'
 
 services:
-  # === Spring Boot Приложение ===
-  app:
-    build: .
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  cart-service:
+    build:
+      context: ./cart-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/aishop
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.PostgreSQLDialect
-    env_file:
-      - .env
+      - SERVICE_CART_URL=http://cart-service:8082
     depends_on:
-      - loki
-      - db
-    networks:
-      - monitoring
-      - Ps
+      - cart-service
 
-  # === бд postgres ===
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: aishop
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - Ps
-
-  # === Prometheus — сбор метрик ===
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    depends_on:
-      - app
-    networks:
-      - monitoring
-
-  # === Loki — сбор логов ===
-  loki:
-    image: grafana/loki:latest
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - monitoring
-
-  promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./promtail-config.yaml:/etc/promtail/config.yml:ro
-    command: -config.file=/etc/promtail/config.yml
-    depends_on:
-      - loki
-    networks:
-      - monitoring
-
-  # === Grafana — визуализация ===
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_PLUGINS_PREINSTALL=grafana-loki-datasource
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ./provisioning:/etc/grafana/provisioning
-    depends_on:
-      - prometheus
-      - loki
-    networks:
-      - monitoring
-
-networks:
-  Ps:
-    driver: bridge
-  monitoring:
-    driver: bridge
 
 volumes:
-  grafana-storage:
-  postgres_data:
+  redis_data:

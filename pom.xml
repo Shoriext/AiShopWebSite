@@ -13,6 +13,7 @@
     <modules>
         <module>frontend</module>
         <module>backend</module>
+        <module>cart-service</module>
     </modules>
 
     <parent>

@@ -1,12 +1,10 @@
 package ru.onlinestore.frontend.service;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ru.onlinestore.frontend.client.CartClient;
 
-import java.time.Duration;
 import java.util.Map;
 
 @Service
@@ -36,4 +34,5 @@ public class PageService {
     public void init() {
         System.out.println("✅ PageService успешно создан!");
     }
+
 }

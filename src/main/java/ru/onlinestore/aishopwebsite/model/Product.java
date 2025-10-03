@@ -1,11 +1,6 @@
 // Сущность представляющая товар в магазине
 package ru.onlinestore.aishopwebsite.model;
 
-import java.util.List;
-
-import lombok.Data;
-
-@Data
 public class Product {
 
     public void setPrintImageUrl(String printImageUrl) {
@@ -97,5 +92,13 @@ public class Product {
 
     public String getSize() {
         return size;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

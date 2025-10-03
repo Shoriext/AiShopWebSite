@@ -29,8 +29,8 @@ public class ShopController {
     private TelegramNotificationService telegramService;
 
     private List<Product> products = Arrays.asList(
-            new Product(1L, "Футболка «Алфавит Студента»", 1990.0, "/images/product1-1.jpg"),
-            new Product(2L, "Шоппер «Алфавит Студента»", 1490.0, "/images/product2-1.jpeg"));
+            new Product(1L, "Футболка «Алфавит Студента»", 2599.0, "/images/product1-1.jpg"),
+            new Product(2L, "Шоппер «Алфавит Студента»", 1599.0, "/images/product2-1.jpeg"));
 
     @GetMapping("/products")
     public String products(Model model, HttpSession session) {

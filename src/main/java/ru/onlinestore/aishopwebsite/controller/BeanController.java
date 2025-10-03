@@ -1,11 +1,11 @@
 package ru.onlinestore.aishopwebsite.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.onlinestore.aishopwebsite.service.BeanService;
 
@@ -23,11 +23,12 @@ public class BeanController {
 
     @GetMapping("/order/buy")
     public String buyProduct(@RequestParam Long productId,
-                             @RequestParam String productName,
-                             @RequestParam Double price,
-                             Model model) throws IOException, InterruptedException {
+            @RequestParam String productName,
+            @RequestParam Double price,
+            Model model) throws IOException, InterruptedException {
         String phone = "124142";
-        String size = "XXXXX";;
+        String size = "XXXXX";
+        ;
         BeanService.buyProduct(phone, productName, size);
         return "purchase-success";
     }

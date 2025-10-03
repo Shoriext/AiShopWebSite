@@ -1,6 +1,8 @@
 // Сущность представляющая товар в магазине
 package ru.onlinestore.aishopwebsite.model;
 
+import java.util.List;
+
 public class Product {
 
     public void setPrintImageUrl(String printImageUrl) {
@@ -23,15 +25,16 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
-    private String imageUrl;
+    private List<String> imageUrls;
 
-    public Product() {}
+    public Product() {
+    }
 
-    public Product(Long id, String name, Double price, String imageUrl) {
+    public Product(Long id, String name, Double price, List<String> imageUrls) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
     }
 
     public Product(String shirtColor, String shirtImageUrl, String printImageUrl) {
@@ -40,39 +43,65 @@ public class Product {
         this.printImageUrl = printImageUrl;
     }
 
-    public Product(Long id, String name, Double price, String imageUrl, String size) {
+    public Product(Long id, String name, Double price, List<String> imageUrls, String size) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
         this.size = size;
     }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setPrice(Double price) { this.price = price; }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-
-    public void setSize(String size) { this.size = size; }
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     // Геттеры
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public Double getPrice() { return price; }
+    public Double getPrice() {
+        return price;
+    }
 
-    public String getImageUrl() { return imageUrl; }
+    public String getShirtColor() {
+        return shirtColor;
+    }
 
-    public String getShirtColor() { return shirtColor; }
+    public String getShirtImageUrl() {
+        return shirtImageUrl;
+    }
 
-    public String getShirtImageUrl() { return shirtImageUrl; }
+    public String getPrintImageUrl() {
+        return printImageUrl;
+    }
 
-    public String getPrintImageUrl() { return printImageUrl; }
+    public String getSize() {
+        return size;
+    }
 
-    public String getSize() { return size; }
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
 
 }

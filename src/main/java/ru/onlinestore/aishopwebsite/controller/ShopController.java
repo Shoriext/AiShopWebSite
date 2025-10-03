@@ -1,6 +1,6 @@
 package ru.onlinestore.aishopwebsite.controller;
 
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,24 +28,28 @@ public class ShopController {
     @Autowired
     private TelegramNotificationService telegramService;
 
-    private final List<Product> products = Arrays.asList(
-            new Product(1L, "Футболка «Алфавит Студента»", 1990.0, "/images/product1.jpg"),
-            new Product(2L, "Шоппер «Алфавит Студента»", 1490.0, "/images/product2.jpg")
-    );
+    private List<String> img1List = Arrays.asList("/images/product1-1.jpg", "/images/product1-2.jpeg",
+            "/images/product1-3.jpeg", "/images/product1-4.jpeg", "/images/product1-5.jpeg");
+    private List<String> img2List = Arrays.asList("/images/product2.jpg");
+
+    private List<Product> products = Arrays.asList(
+            new Product(1L, "Футболка «Алфавит Студента»", 1990.0, img1List),
+            new Product(2L, "Шоппер «Алфавит Студента»", 1490.0, img2List));
 
     @GetMapping("/products")
     public String products(Model model, HttpSession session) {
+
         model.addAttribute("products", products);
         model.addAttribute("activePage", "products");
         model.addAttribute("cart", cartService.getCart(session));
-        
+
         // Проверяем наличие сообщения об успехе в сессии
         String successMessage = (String) session.getAttribute("successMessage");
         if (successMessage != null) {
             model.addAttribute("successMessage", successMessage);
             session.removeAttribute("successMessage"); // Удаляем сообщение из сессии
         }
-        
+
         return "products";
     }
 
@@ -72,18 +76,17 @@ public class ShopController {
 
         // Создаем новый экземпляр продукта с размером
         Product productWithSize = new Product(
-            product.getId(),
-            product.getName(),
-            product.getPrice(),
-            product.getImageUrl(),
-            size != null ? size : null
-        );
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getImageUrls(),
+                size != null ? size : null);
 
         cartService.addToCart(session, productWithSize);
 
         // Добавляем сообщение об успешном добавлении в сессию
         session.setAttribute("successMessage", "Товар успешно добавлен в корзину!");
-        
+
         return "redirect:/products";
     }
 
@@ -92,14 +95,14 @@ public class ShopController {
         List<CartItem> cart = cartService.getCart(session);
         model.addAttribute("cart", cart);
         model.addAttribute("total", cartService.getTotal(cart));
-        
+
         // Проверяем наличие сообщения об успехе в сессии
         String successMessage = (String) session.getAttribute("successMessage");
         if (successMessage != null) {
             model.addAttribute("successMessage", successMessage);
             session.removeAttribute("successMessage"); // Удаляем сообщение из сессии
         }
-        
+
         return "cart";
     }
 

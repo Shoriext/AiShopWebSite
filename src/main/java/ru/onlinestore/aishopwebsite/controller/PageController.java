@@ -12,7 +12,7 @@ public class PageController {
 
     @Autowired
     private CartService cartService;
-    // Главная страница
+
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
         model.addAttribute("cart", cartService.getCart(session));

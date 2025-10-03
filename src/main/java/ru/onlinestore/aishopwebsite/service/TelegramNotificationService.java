@@ -10,7 +10,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-
 @Service
 public class TelegramNotificationService {
 
@@ -39,7 +38,6 @@ public class TelegramNotificationService {
         sendMessage(message.toString());
     }
 
-
     private String escapeMarkdown(String text) {
         return text.replaceAll("[_\\-*]", "\\\\$0"); // экранируем _, *, -
     }
@@ -54,15 +52,13 @@ public class TelegramNotificationService {
                     "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=HTML",
                     botToken,
                     chatId,
-                    message
-            );
+                    message);
 
             restTemplate.getForObject(url, String.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Отправляет уведомление в Telegram о заказе кастомной футболки
@@ -79,11 +75,11 @@ public class TelegramNotificationService {
             readableColor = "Чёрная";
         }
 
-
         // Потом отправляем текстовое сообщение
         String message = buildCustomOrderMessage(customerName, phone, readableColor, printImageUrl);
         sendMessage(message);
     }
+
     private String buildCustomOrderMessage(
             String customerName,
             String phone,

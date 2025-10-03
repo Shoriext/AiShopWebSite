@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
-
 
 @Service
 public class GenApiClient {
@@ -42,11 +40,9 @@ public class GenApiClient {
                 .headers(
                         "Content-Type", "application/json",
                         "Accept", "application/json",
-                        "Authorization", "Bearer " + API_KEY
-                )
+                        "Authorization", "Bearer " + API_KEY)
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-
 
         HttpResponse<String> response = httpClient1.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -65,7 +61,7 @@ public class GenApiClient {
     public Map<String, Object> getStatus(String taskId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(STATUS_URL + taskId))
-                .header("Authorization", "Bearer "+ API_KEY)
+                .header("Authorization", "Bearer " + API_KEY)
                 .GET()
                 .build();
 

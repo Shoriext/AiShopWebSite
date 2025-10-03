@@ -3,6 +3,9 @@ package ru.onlinestore.aishopwebsite.model;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class Product {
 
     public void setPrintImageUrl(String printImageUrl) {
@@ -25,16 +28,16 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
-    private List<String> imageUrls;
+    private String imageUrl;
 
     public Product() {
     }
 
-    public Product(Long id, String name, Double price, List<String> imageUrls) {
+    public Product(Long id, String name, Double price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrls = imageUrls;
+        this.imageUrl = imageUrl;
     }
 
     public Product(String shirtColor, String shirtImageUrl, String printImageUrl) {
@@ -43,11 +46,11 @@ public class Product {
         this.printImageUrl = printImageUrl;
     }
 
-    public Product(Long id, String name, Double price, List<String> imageUrls, String size) {
+    public Product(Long id, String name, Double price, String imageUrl, String size) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrls = imageUrls;
+        this.imageUrl = imageUrl;
         this.size = size;
     }
 
@@ -95,13 +98,4 @@ public class Product {
     public String getSize() {
         return size;
     }
-
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
 }

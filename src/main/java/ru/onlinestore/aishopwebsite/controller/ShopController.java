@@ -28,13 +28,9 @@ public class ShopController {
     @Autowired
     private TelegramNotificationService telegramService;
 
-    private List<String> img1List = Arrays.asList("/images/product1-1.jpg", "/images/product1-2.jpeg",
-            "/images/product1-3.jpeg", "/images/product1-4.jpeg", "/images/product1-5.jpeg");
-    private List<String> img2List = Arrays.asList("/images/product2.jpg");
-
     private List<Product> products = Arrays.asList(
-            new Product(1L, "Футболка «Алфавит Студента»", 1990.0, img1List),
-            new Product(2L, "Шоппер «Алфавит Студента»", 1490.0, img2List));
+            new Product(1L, "Футболка «Алфавит Студента»", 1990.0, "/images/product1-1.jpg"),
+            new Product(2L, "Шоппер «Алфавит Студента»", 1490.0, "/images/product2-1.jpeg"));
 
     @GetMapping("/products")
     public String products(Model model, HttpSession session) {
@@ -79,7 +75,7 @@ public class ShopController {
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getImageUrls(),
+                product.getImageUrl(),
                 size != null ? size : null);
 
         cartService.addToCart(session, productWithSize);

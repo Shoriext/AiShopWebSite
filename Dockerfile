@@ -1,8 +1,11 @@
-# Используем OpenJDK 17 как базовый образ
-FROM openjdk:17-jdk-slim
-# Указываем рабочую директорию
+# Stage 1: сборка
+FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /app
-# Копируем JAR файл из target
-COPY target/AiShopWebSite-0.0.1-SNAPSHOT.jar app.jar
-# Запускаем приложение
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: запуск
+FROM openjdk:17-jdk-slim
+COPY --from=builder /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]

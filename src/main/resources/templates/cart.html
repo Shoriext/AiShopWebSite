@@ -1,225 +1,252 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Корзина</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 100px 20px 0;
-            background: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            flex: 1;
-        }
-        h1 { text-align: center; color: #273352; }
-        .cart-item {
-            display: flex;
-            background: #fff;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            align-items: center;
-        }
-        .item-image {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin-right: 20px;
-        }
-        .item-info { flex: 1; }
-        .item-price { font-weight: 600; }
-        .item-total { font-size: 18px; margin-top: 5px; }
-        .btn-remove {
-            background: #e53935;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .total {
-            text-align: right;
-            font-size: 22px;
-            font-weight: 600;
-            margin: 20px 0;
-        }
-        .btn-checkout {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 12px;
-            background: #273352;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-        /* Специфичные стили для футера на странице корзины */
-        .footer {
-            background: #273352;
-            color: #fff;
-            padding: 40px 0 20px;
-            margin-top: auto;
-            flex-shrink: 0;
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-        }
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 100px 20px 0;
+        background: #f5f5f5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        flex: 1;
+      }
+      h1 {
+        text-align: center;
+        color: #273352;
+      }
+      .cart-item {
+        display: flex;
+        background: #fff;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        align-items: center;
+      }
+      .item-image {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-right: 20px;
+      }
+      .item-info {
+        flex: 1;
+      }
+      .item-price {
+        font-weight: 600;
+      }
+      .item-total {
+        font-size: 18px;
+        margin-top: 5px;
+      }
+      .btn-remove {
+        background: #e53935;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .total {
+        text-align: right;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 20px 0;
+      }
+      .btn-checkout {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 12px;
+        background: #273352;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+      /* Специфичные стили для футера на странице корзины */
+      .footer {
+        background: #273352;
+        color: #fff;
+        padding: 40px 0 20px;
+        margin-top: auto;
+        flex-shrink: 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+      }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 50px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+      }
 
-        .footer-section h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #fff;
-        }
+      .footer-section h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #fff;
+      }
 
-        .footer-section h4 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            color: #fff;
-        }
+      .footer-section h4 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: #fff;
+      }
 
-        .footer-section p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #e0e6ed;
-            margin-bottom: 8px;
-        }
+      .footer-section p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #e0e6ed;
+        margin-bottom: 8px;
+      }
 
-        .footer-bottom {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #3a4a6b;
-        }
+      .footer-bottom {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #3a4a6b;
+      }
 
-        .footer-bottom p {
-            color: #a0aec0;
-            font-size: 12px;
-        }
+      .footer-bottom p {
+        color: #a0aec0;
+        font-size: 12px;
+      }
 
-        /* Стили для уведомлений */
-        .success-message {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            border: 1px solid #c8e6c9;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: slideIn 0.3s ease-out;
-        }
+      /* Стили для уведомлений */
+      .success-message {
+        background: #e8f5e8;
+        color: #2e7d32;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        border: 1px solid #c8e6c9;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        animation: slideIn 0.3s ease-out;
+      }
 
-        .success-message::before {
-            content: "✓";
-            font-weight: bold;
-            font-size: 16px;
-        }
+      .success-message::before {
+        content: "✓";
+        font-weight: bold;
+        font-size: 16px;
+      }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <h1>Корзина</h1>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Корзина</h1>
 
-    <!-- Сообщение об успехе -->
-    <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+      <!-- Сообщение об успехе -->
+      <div
+        th:if="${successMessage}"
+        class="success-message"
+        th:text="${successMessage}"
+      ></div>
 
-    <!-- Если корзина пуста -->
-    <div th:if="${#lists.isEmpty(cart)}" class="empty">
+      <!-- Если корзина пуста -->
+      <div th:if="${#lists.isEmpty(cart)}" class="empty">
         <p>Ваша корзина пуста</p>
         <a href="/products" class="btn-checkout">Вернуться к товарам</a>
-    </div>
+      </div>
 
-    <!-- Если корзина НЕ пуста -->
-    <div th:if="${!#lists.isEmpty(cart)}">
+      <!-- Если корзина НЕ пуста -->
+      <div th:if="${!#lists.isEmpty(cart)}">
         <!-- Список товаров -->
         <div class="cart-item" th:each="item : ${cart}">
-            <img th:src="${item.product.imageUrl}" class="item-image" alt="" />
-            <div class="item-info">
-                <h3 th:text="${item.product.name}"></h3>
-                <p class="item-price"
-                   th:text="${#numbers.formatDecimal(item.product.price, 2, 2, 'COMMA')} + ' ₽'">
-                </p>
-                <p th:if="${item.product.size != null and item.product.size != ''}" 
-                   th:text="'Размер: ' + ${item.product.size}">
-                </p>
-                <p class="item-total"
-                   th:text="'Итого: ' + ${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽ (' + ${item.quantity} + ' шт.)'">
-                </p>
-            </div>
-            <a th:href="@{/cart/remove(productId=${item.product.id}, size=${item.product.size})}" class="btn-remove">Удалить</a>
+          <img th:src="${item.product.imageUrl}" class="item-image" alt="" />
+          <div class="item-info">
+            <h3 th:text="${item.product.name}"></h3>
+            <p
+              class="item-price"
+              th:text="${#numbers.formatDecimal(item.product.price, 2, 2, 'COMMA')} + ' ₽'"
+            ></p>
+            <p
+              th:if="${item.product.size != null and item.product.size != ''}"
+              th:text="'Размер: ' + ${item.product.size}"
+            ></p>
+            <p
+              class="item-total"
+              th:text="'Итого: ' + ${#numbers.formatDecimal(item.totalPrice, 2, 2, 'COMMA')} + ' ₽ (' + ${item.quantity} + ' шт.)'"
+            ></p>
+          </div>
+          <a
+            th:href="@{/cart/remove(productId=${item.product.id}, size=${item.product.size})}"
+            class="btn-remove"
+            >Удалить</a
+          >
         </div>
 
         <!-- Общая сумма -->
-        <div class="total"
-             th:text="'Общая сумма: ' + ${#numbers.formatDecimal(total, 2, 2, 'COMMA')} + ' ₽'">
-        </div>
+        <div
+          class="total"
+          th:text="'Общая сумма: ' + ${#numbers.formatDecimal(total, 2, 2, 'COMMA')} + ' ₽'"
+        ></div>
 
         <!-- КНОПКА ОФОРМИТЬ ЗАКАЗ — ТОЛЬКО ЕСЛИ ТОВАРЫ ЕСТЬ -->
-        <a th:if="${!#lists.isEmpty(cart)}" href="/checkout" class="btn-checkout">
-            Оформить заказ
+        <a
+          th:if="${!#lists.isEmpty(cart)}"
+          href="/checkout"
+          class="btn-checkout"
+        >
+          Оформить заказ
         </a>
         <a href="/products" class="btn-checkout">Продолжить покупки</a>
+      </div>
     </div>
-
-
-</div>
     <!-- Подключаем футер -->
     <div th:replace="~{fragments/footer :: footer}"></div>
-    
+
     <script>
-        // Автоматическое скрытие уведомления через 4 секунды
-        document.addEventListener('DOMContentLoaded', function() {
-            const successMessage = document.querySelector('.success-message');
-            
-            if (successMessage) {
-                setTimeout(() => {
-                    successMessage.style.opacity = '0';
-                    successMessage.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        successMessage.remove();
-                    }, 300);
-                }, 4000);
-            }
-        });
+      // Автоматическое скрытие уведомления через 4 секунды
+      document.addEventListener("DOMContentLoaded", function () {
+        const successMessage = document.querySelector(".success-message");
+
+        if (successMessage) {
+          setTimeout(() => {
+            successMessage.style.opacity = "0";
+            successMessage.style.transform = "translateY(-20px)";
+            setTimeout(() => {
+              successMessage.remove();
+            }, 300);
+          }, 4000);
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

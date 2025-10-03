@@ -15,12 +15,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/ai")
-@RequiredArgsConstructor
 public class AiController {
 
-    @Autowired
     private final GenApiClient genApiClient;
 
+    public AiController(GenApiClient genApiClient) {
+        this.genApiClient = genApiClient;
+    }
 
     @GetMapping("/form")
     public String showForm() {
@@ -40,7 +41,7 @@ public class AiController {
             response.put("imageUrl", imageUrl);
 
             return ResponseEntity.ok(response);
-             // шаблон result.html
+            // шаблон result.html
         } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
@@ -48,7 +49,6 @@ public class AiController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
-
 
     private String waitForImage(String taskId) throws InterruptedException {
         for (int i = 0; i < 60; i++) { // максимум 30 попыток × 2 сек = 60 сек

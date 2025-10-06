@@ -6,8 +6,8 @@ target/
 src/main/resources/application.properties
 
 .env
-*.key
-*.pem
+# *.key
+# *.pem
 
 ### STS ###
 .apt_generated

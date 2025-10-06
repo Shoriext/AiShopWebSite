@@ -2,8 +2,20 @@ version: "3.8"
 
 services:
   app:
+    container_name: app
     build: .
     ports:
       - "8080:8080"
     env_file:
       - .env
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl

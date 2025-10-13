@@ -760,39 +760,47 @@ main {
 /* Мобильные устройства (до 768px) */
 @media (max-width: 768px) {
     .header {
-        height: 100px;
-        padding: 0 20px;
+        height: auto;
+        min-height: 100px;
+        padding: 15px 20px;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 8px;
     }
     .logo {
         position: static;
         margin-bottom: 5px;
         height: 60px;
+        flex-shrink: 0;
     }
     .main-nav {
         width: 100%;
         justify-content: space-around;
         gap: 12px;
         flex-wrap: wrap;
+        margin-top: 5px;
     }
     .nav-link {
         font-size: 14px;
         padding: 6px 8px;
+        flex-shrink: 0;
     }
 
     .blue-stripe {
-        top: 100px;
         height: 60px;
+        position: fixed;
+        top: 120px;
+        width: 100%;
+        background: #273352;
+        z-index: 99;
     }
 
     .main-content,
     .content,
     .constructor-wrapper,
     .products-container {
-        margin-top: 180px;
+        margin-top: 200px;
         padding: 0 20px;
     }
 
@@ -899,32 +907,40 @@ main {
 /* Очень маленькие экраны (до 480px) */
 @media (max-width: 480px) {
     .header {
-        height: 90px;
-        padding: 0 15px;
+        height: auto;
+        min-height: 90px;
+        padding: 12px 15px;
         gap: 5px;
     }
     .logo {
         height: 50px;
+        flex-shrink: 0;
     }
     .main-nav {
         gap: 8px;
         flex-wrap: wrap;
+        margin-top: 5px;
     }
     .nav-link {
         font-size: 12px;
         padding: 4px 6px;
+        flex-shrink: 0;
     }
 
     .blue-stripe {
-        top: 90px;
         height: 50px;
+        position: fixed;
+        top: 110px;
+        width: 100%;
+        background: #273352;
+        z-index: 99;
     }
 
     .main-content,
     .content,
     .constructor-wrapper,
     .products-container {
-        margin-top: 160px;
+        margin-top: 180px;
         padding: 0 15px;
     }
     

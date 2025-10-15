@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RestController
 @Controller
 @RequestMapping("/ai")
 public class AiController {
@@ -26,6 +27,12 @@ public class AiController {
     @GetMapping("/form")
     public String showForm() {
         return "ai/form"; // шаблон form.html
+    }
+
+    @GetMapping("/test")
+    public String testConnection() {
+        genApiClient.testConnection();
+        return "Тест завершен, проверьте логи";
     }
 
     @PostMapping("/generate")

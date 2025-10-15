@@ -21,8 +21,8 @@ public class GenApiClient {
     @Value("${api.key}")
     private String API_KEY;
 
-    private static final String STATUS_URL = "https://api.gen-api.ru/api/v1/request/get/";
-    private static String URL = "https://api.gen-api.ru/api/v1/networks/kling-image";
+    @Value("${gen.api.base.url:https://merchii.ru/gen-api}")
+    private String GEN_API_BASE_URL;
 
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -35,8 +35,11 @@ public class GenApiClient {
 
         String json = objectMapper.writeValueAsString(input);
 
+        // Используем прокси URL вместо прямого
+        String generateUrl = GEN_API_BASE_URL + "/api/v1/networks/kling-image";
+
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(URL))
+                .uri(URI.create(generateUrl))
                 .headers(
                         "Content-Type", "application/json",
                         "Accept", "application/json",
@@ -59,8 +62,11 @@ public class GenApiClient {
     }
 
     public Map<String, Object> getStatus(String taskId) throws Exception {
+        // Используем прокси URL для статуса
+        String statusUrl = GEN_API_BASE_URL + "/api/v1/request/get/" + taskId;
+
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(STATUS_URL + taskId))
+                .uri(URI.create(statusUrl))
                 .header("Authorization", "Bearer " + API_KEY)
                 .GET()
                 .build();

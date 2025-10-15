@@ -7,8 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import ru.onlinestore.aishopwebsite.service.GenApiClient;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +34,11 @@ public class AiController {
     }
 
     @GetMapping("/test")
-    public String testConnection() {
-        genApiClient.testConnection();
-        return "Тест завершен, проверьте логи";
+    public String testConnection() throws JsonProcessingException, IOException, InterruptedException {
+        String promt = "кот на столе";
+        String taskId;
+        taskId = genApiClient.aiGenerateImg(promt);
+        return "Тест завершен, проверьте логи" + taskId;
     }
 
     @PostMapping("/generate")

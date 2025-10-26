@@ -104,6 +104,9 @@
               });
             }
           });
+          function showGenerationMessage() {
+            document.getElementById('generation-message').style.display = 'block';
+          }
         </script>
         <!-- Правая часть - конструктор -->
         <div class="constructor-content">
@@ -126,13 +129,16 @@
               placeholder="Напишите здесь свой запрос..."
             ></textarea>
           </form>
-          <div>
+          <!-- Текст, который появится после нажатия -->
+          <p id="generation-message" style="font-size: 0.9em; color: #555; display: none; margin-top: 10px;">
+            Изображение генерируется в течение 1–2 минут
+          </p>          <div>
             <!-- Кнопка изменена: добавлен спиннер и состояние загрузки -->
             <button
               type="button"
               class="generate-btn"
               id="generate-btn"
-              onclick="submitForm()"
+              onclick="submitForm(); showGenerationMessage();"
               style="margin-bottom: 15px"
             >
               СГЕНЕРИРОВАТЬ

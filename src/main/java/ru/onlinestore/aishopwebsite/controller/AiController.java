@@ -64,7 +64,7 @@ public class AiController {
     }
 
     private String waitForImage(String taskId) throws InterruptedException {
-        for (int i = 0; i < 60; i++) { // максимум 30 попыток × 2 сек = 60 сек
+        for (int i = 0; i < 120; i++) { // максимум 30 попыток × 2 сек = 60 сек
             try {
                 Map<String, Object> status = genApiClient.getStatus(taskId);
                 String responseStatus = (String) status.get("status");

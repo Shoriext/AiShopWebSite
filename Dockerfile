@@ -6,6 +6,6 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: запуск
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre
 COPY --from=builder /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]

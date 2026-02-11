@@ -12,7 +12,6 @@
     <header class="header">
         <div class="logo">
             <img th:src="@{/images/logo.svg}" alt="Ai Wear Logo">
-            <img src="images/fsi.png" alt="FSI Logo" style="height: 80px; margin-left: 15px;">
         </div>
         <nav class="main-nav">
             <a th:href="@{/}" class="nav-link" th:classappend="${activePage == 'home'} ? 'active' : ''">О НАС</a>
@@ -43,6 +42,10 @@
             <p class="text-paragraph">Каждая вещь создаётся с заботой о качестве, ведь мы используем лучшие материалы и технологии печати.</p>
             <p class="text-paragraph">Хотите мерч, который будет говорить за вас? Ai Wear сделает это возможным.</p>
             <p class="text-paragraph">Носите то, что вдохновляет – носите то, что создали именно вы.</p>
+        </div>
+        <div class="logo-container">
+            <img src="images/fsi.png" alt="FSI Logo" class="logo-image">
+            <p class="text-paragraph">Проект создан при поддержке Федерального государственного бюджетного учреждения "Фонд содействия развитию малых форм предприятий в научно-технической сфере" в рамках программы "Студенческий стартап" федерального проекта "Платформа университетского технологического предпринимательства"</p>
         </div>
     </main>
     <!-- Подключаем футер -->
